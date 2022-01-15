@@ -15,8 +15,8 @@ class NetworkManager {
     
     private init() {}
     
-    func fetchWeatherData(completionHandler: @escaping (WeatherInfo?) -> Void) {
-        guard let weatherUrl = makeQueryUrl() else { return }
+    func fetchWeatherData(latitude: Double, longtitude: Double, completionHandler: @escaping (WeatherInfo?) -> Void) {
+        guard let weatherUrl = makeQueryUrl(latitude, longtitude) else { return }
         
         URLSession.shared.dataTask(with: weatherUrl) { data, _, _ in
             guard let data = data else { return }
@@ -37,13 +37,14 @@ class NetworkManager {
         }.resume()
     }
     
-    private func makeQueryUrl() -> URL? {
+    private func makeQueryUrl(_ latitude: Double, _ longtitude: Double) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.openweathermap.org"
         components.path = "/data/2.5/weather"
         components.queryItems = [
-            URLQueryItem(name: "q", value: "Moscow"),
+            URLQueryItem(name: "lat", value: String(latitude)),
+            URLQueryItem(name: "lon", value: String(longtitude)),
             URLQueryItem(name: "units", value: "metric"),
             URLQueryItem(name: "lang", value: "ru"),
             URLQueryItem(name: "appid", value: apiKey)

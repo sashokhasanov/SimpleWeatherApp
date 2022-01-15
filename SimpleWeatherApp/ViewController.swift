@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class ViewController: UIViewController {
 
@@ -15,18 +16,33 @@ class ViewController: UIViewController {
     @IBOutlet weak var feelsLikeLabel: UILabel!
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var mainInfoView: UIStackView!
+    @IBOutlet weak var cityLabel: UILabel!
+    
+    // MARK: - Private properties
+    private let locationManager = CLLocationManager()
     
     // MARK: - Override methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateWeather()
+        setupLocation()
     }
     
-    // MARK: - Private methos
-    private func updateWeather() {
+    // MARK: - Private methods
+    private func setupLocation() {
+        locationManager.requestWhenInUseAuthorization()
+
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    private func updateWeather(latitude: Double, longtiture: Double) {
+        cityLabel.isHidden = true
         startAnimate(view: mainInfoView)
 
-        NetworkManager.shared.fetchWeatherData() { weatherInfo in
+        NetworkManager.shared.fetchWeatherData(latitude: latitude, longtitude: longtiture) { weatherInfo in
 
             DispatchQueue.main.async {
                 self.stopAnimateView(view: self.mainInfoView)
@@ -38,6 +54,9 @@ class ViewController: UIViewController {
                 if let iconId = weatherInfo.weather?[0].icon {
                     self.updateWeaterIcon(for: iconId)
                 }
+                self.cityLabel.isHidden = false
+                self.cityLabel.text = weatherInfo.name
+                
                 self.temperatureLabel.text = String(format: "%0.f°C", weatherInfo.main?.temp ?? 0)
                 self.feelsLikeLabel.text = String(format: "Ощущается как %0.f°C", weatherInfo.main?.feelsLike ?? 0)
 
@@ -48,7 +67,6 @@ class ViewController: UIViewController {
     }
     
     private func updateWeaterIcon(for iconId: String) {
-        
         startAnimate(view: iconView)
         
         NetworkManager.shared.fetchWeatherIcon(with: iconId) { icon in
@@ -76,3 +94,9 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        updateWeather(latitude: locValue.latitude, longtiture: locValue.longitude)
+    }
+}
