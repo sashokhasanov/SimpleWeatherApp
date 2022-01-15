@@ -20,7 +20,10 @@ class NetworkManager {
         
         URLSession.shared.dataTask(with: weatherUrl) { data, _, _ in
             guard let data = data else { return }
+            
+            // TODO remove before release
             sleep(5)
+            
             let weatherInfo = try? JSONDecoder().decode(WeatherInfo.self, from: data)
             completionHandler(weatherInfo)
         }.resume()
@@ -31,7 +34,10 @@ class NetworkManager {
         
         URLSession.shared.dataTask(with: iconUrl) { data, _, _ in
             guard let data = data else { return }
+            
+            // TODO remove before release
             sleep(2)
+            
             let icon = UIImage(data: data)
             completionHandler(icon)
         }.resume()
