@@ -8,7 +8,7 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController {
+class WeatherViewController: UIViewController {
 
     // MARK: - IBOutlets
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -94,7 +94,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: CLLocationManagerDelegate {
+extension WeatherViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         updateWeather(latitude: locValue.latitude, longtiture: locValue.longitude)

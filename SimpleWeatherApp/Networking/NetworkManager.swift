@@ -16,7 +16,7 @@ class NetworkManager {
     private init() {}
     
     func fetchWeatherData(latitude: Double, longtitude: Double, completionHandler: @escaping (WeatherInfo?) -> Void) {
-        guard let weatherUrl = makeQueryUrl(latitude, longtitude) else { return }
+        guard let weatherUrl = makeWeatherRquestUrl(latitude, longtitude) else { return }
         
         URLSession.shared.dataTask(with: weatherUrl) { data, _, _ in
             guard let data = data else { return }
@@ -30,7 +30,7 @@ class NetworkManager {
     }
     
     func fetchWeatherIcon(with id: String, completionHandler: @escaping (UIImage?) -> Void) {
-        guard let iconUrl = makeIconUrl(for: id) else { return }
+        guard let iconUrl = makeIconRequestUrl(for: id) else { return }
         
         URLSession.shared.dataTask(with: iconUrl) { data, _, _ in
             guard let data = data else { return }
@@ -43,7 +43,7 @@ class NetworkManager {
         }.resume()
     }
     
-    private func makeQueryUrl(_ latitude: Double, _ longtitude: Double) -> URL? {
+    private func makeWeatherRquestUrl(_ latitude: Double, _ longtitude: Double) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.openweathermap.org"
@@ -59,7 +59,7 @@ class NetworkManager {
         return components.url
     }
     
-    private func makeIconUrl(for iconId: String) -> URL? {
+    private func makeIconRequestUrl(for iconId: String) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "openweathermap.org"
