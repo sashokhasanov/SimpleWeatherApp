@@ -60,17 +60,57 @@
 		2DB62A002791E6AD00B909B5 /* SimpleWeatherApp */ = {
 			isa = PBXGroup;
 			children = (
-				2DB62A012791E6AD00B909B5 /* AppDelegate.swift */,
-				2DB62A032791E6AD00B909B5 /* SceneDelegate.swift */,
-				2DB62A052791E6AD00B909B5 /* ViewController.swift */,
-				2DB62A172791F58800B909B5 /* WeatherInfo.swift */,
-				2DB62A192791F62000B909B5 /* NetworkManager.swift */,
-				2DB62A072791E6AD00B909B5 /* Main.storyboard */,
-				2DB62A0A2791E6B400B909B5 /* Assets.xcassets */,
-				2DB62A0C2791E6B400B909B5 /* LaunchScreen.storyboard */,
-				2DB62A0F2791E6B400B909B5 /* Info.plist */,
+				2DB62A1F27937CCF00B909B5 /* Other */,
+				2DB62A1E27937CAC00B909B5 /* Networking */,
+				2DB62A1D27937C8300B909B5 /* Storyboards */,
+				2DB62A1C27937C7300B909B5 /* Model */,
+				2DB62A1B27937C5A00B909B5 /* ViewControllers */,
 			);
 			path = SimpleWeatherApp;
+			sourceTree = "<group>";
+		};
+		2DB62A1B27937C5A00B909B5 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2DB62A052791E6AD00B909B5 /* ViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		2DB62A1C27937C7300B909B5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2DB62A172791F58800B909B5 /* WeatherInfo.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2DB62A1D27937C8300B909B5 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				2DB62A0C2791E6B400B909B5 /* LaunchScreen.storyboard */,
+				2DB62A072791E6AD00B909B5 /* Main.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		2DB62A1E27937CAC00B909B5 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				2DB62A192791F62000B909B5 /* NetworkManager.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		2DB62A1F27937CCF00B909B5 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				2DB62A012791E6AD00B909B5 /* AppDelegate.swift */,
+				2DB62A032791E6AD00B909B5 /* SceneDelegate.swift */,
+				2DB62A0A2791E6B400B909B5 /* Assets.xcassets */,
+				2DB62A0F2791E6B400B909B5 /* Info.plist */,
+			);
+			path = Other;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -299,7 +339,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HUN84826YQ;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SimpleWeatherApp/Info.plist;
+				INFOPLIST_FILE = SimpleWeatherApp/Other/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -327,7 +367,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HUN84826YQ;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SimpleWeatherApp/Info.plist;
+				INFOPLIST_FILE = SimpleWeatherApp/Other/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
