@@ -16,32 +16,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0°C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fh6-kn-1vo">
-                                <rect key="frame" x="93.5" y="233.5" width="133" height="101.5"/>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="85"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ощущается как 0°C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xXh-QT-t7U">
-                                <rect key="frame" x="81" y="340" width="158" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" systemColor="systemGrayColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Zfl-lG-HTc">
-                                <rect key="frame" x="83.5" y="173" width="153" height="50"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3fe-2r-L1e">
+                                <rect key="frame" x="48" y="173" width="224" height="222"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W60-aK-xox">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="DF9-6v-3fq"/>
-                                            <constraint firstAttribute="height" constant="50" id="w6h-cd-opR"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Пасмурно" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0xf-SL-dby">
-                                        <rect key="frame" x="60" y="0.0" width="93" height="50"/>
-                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Zfl-lG-HTc">
+                                        <rect key="frame" x="0.0" y="0.0" width="224" height="100"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sun.max" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="W60-aK-xox">
+                                                <rect key="frame" x="0.0" y="-0.5" width="100" height="100.5"/>
+                                                <color key="tintColor" systemColor="labelColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="100" id="DF9-6v-3fq"/>
+                                                    <constraint firstAttribute="height" constant="100" id="w6h-cd-opR"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ясное небо" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0xf-SL-dby">
+                                                <rect key="frame" x="105" y="0.0" width="119" height="100"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="23"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0°C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fh6-kn-1vo">
+                                        <rect key="frame" x="45.5" y="100" width="133" height="101.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="85"/>
                                         <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ощущается как 0°C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xXh-QT-t7U">
+                                        <rect key="frame" x="33" y="201.5" width="158" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" systemColor="systemGrayColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -52,34 +58,23 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kXU-KJ-n2F">
-                                <rect key="frame" x="103" y="502" width="114.5" height="31"/>
-                                <color key="backgroundColor" red="0.0" green="0.56904578210000001" blue="0.57461684940000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="arrow.triangle.2.circlepath" catalog="system" title="Обновить"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="kXU-KJ-n2F" secondAttribute="bottom" constant="35" id="1Ud-Rt-LE2"/>
-                            <constraint firstItem="kXU-KJ-n2F" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4C1-Xs-Ioo"/>
                             <constraint firstItem="U7u-UT-HkQ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="6CL-vw-C1h"/>
-                            <constraint firstItem="xXh-QT-t7U" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="C6e-br-aB4"/>
-                            <constraint firstItem="xXh-QT-t7U" firstAttribute="top" secondItem="fh6-kn-1vo" secondAttribute="bottom" constant="5" id="Emo-ge-X4l"/>
-                            <constraint firstItem="Zfl-lG-HTc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="XjW-cv-uzF"/>
-                            <constraint firstItem="fh6-kn-1vo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ZcK-oU-kZs"/>
-                            <constraint firstItem="fh6-kn-1vo" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="buB-rm-Dlq"/>
+                            <constraint firstItem="3fe-2r-L1e" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="NBN-oE-b5p"/>
+                            <constraint firstItem="3fe-2r-L1e" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="RcN-dt-c29"/>
                             <constraint firstItem="U7u-UT-HkQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hOT-E1-LZR"/>
-                            <constraint firstItem="fh6-kn-1vo" firstAttribute="top" secondItem="Zfl-lG-HTc" secondAttribute="bottom" constant="10.5" id="vIZ-mW-Kp9"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="0xf-SL-dby" id="GAE-35-ebk"/>
+                        <outlet property="feelsLikeLabel" destination="xXh-QT-t7U" id="cuw-DI-GWB"/>
+                        <outlet property="iconView" destination="W60-aK-xox" id="5P0-VJ-uiZ"/>
+                        <outlet property="mainInfoView" destination="3fe-2r-L1e" id="NYU-kX-g4J"/>
+                        <outlet property="temperatureLabel" destination="fh6-kn-1vo" id="4Pz-rc-wbv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -87,7 +82,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="arrow.triangle.2.circlepath" catalog="system" width="128" height="101"/>
+        <image name="sun.max" catalog="system" width="128" height="124"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
