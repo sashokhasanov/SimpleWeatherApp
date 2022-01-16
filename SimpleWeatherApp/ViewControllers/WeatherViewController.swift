@@ -20,6 +20,7 @@ class WeatherViewController: UIViewController {
     
     // MARK: - Private properties
     private let locationManager = CLLocationManager()
+    private var lastLocation: CLLocation?
     
     // MARK: - Override methods
     override func viewDidLoad() {
@@ -95,8 +96,25 @@ class WeatherViewController: UIViewController {
 }
 
 extension WeatherViewController: CLLocationManagerDelegate {
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        updateWeather(latitude: locValue.latitude, longtiture: locValue.longitude)
+        
+        guard let location = locations.last else { return }
+        
+        if needUpdateWeather(with: location) {
+            lastLocation = location
+            
+            updateWeather(latitude: location.coordinate.latitude,
+                          longtiture: location.coordinate.longitude)
+        }
+    }
+    
+    func needUpdateWeather(with location: CLLocation) -> Bool {
+        guard let lastLocation = lastLocation else { return true }
+        
+        let distanceSignificantlyChanged = location.distance(from: lastLocation) > 500
+        let significantTimePassed = lastLocation.timestamp.distance(to: location.timestamp) > 60
+        
+        return distanceSignificantlyChanged || significantTimePassed
     }
 }
