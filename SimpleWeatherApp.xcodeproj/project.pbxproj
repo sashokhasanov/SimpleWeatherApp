@@ -60,11 +60,11 @@
 		2DB62A002791E6AD00B909B5 /* SimpleWeatherApp */ = {
 			isa = PBXGroup;
 			children = (
-				2DB62A1F27937CCF00B909B5 /* Other */,
-				2DB62A1E27937CAC00B909B5 /* Networking */,
 				2DB62A1D27937C8300B909B5 /* Storyboards */,
-				2DB62A1C27937C7300B909B5 /* Model */,
 				2DB62A1B27937C5A00B909B5 /* ViewControllers */,
+				2DB62A1C27937C7300B909B5 /* Model */,
+				2DB62A1E27937CAC00B909B5 /* Networking */,
+				2DB62A1F27937CCF00B909B5 /* Other */,
 			);
 			path = SimpleWeatherApp;
 			sourceTree = "<group>";
