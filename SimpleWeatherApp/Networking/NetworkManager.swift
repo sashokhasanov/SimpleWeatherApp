@@ -5,7 +5,7 @@
 //  Created by Сашок on 14.01.2022.
 //
 
-import UIKit
+import Foundation
 
 class NetworkManager {
     
@@ -18,8 +18,12 @@ class NetworkManager {
     func fetchWeatherData(latitude: Double, longtitude: Double, completionHandler: @escaping (WeatherInfo?) -> Void) {
         guard let weatherUrl = makeWeatherRquestUrl(latitude, longtitude) else { return }
         
-        URLSession.shared.dataTask(with: weatherUrl) { data, _, _ in
-            guard let data = data else { return }
+        URLSession.shared.dataTask(with: weatherUrl) { data, _, error in
+            guard let data = data else {
+                // TODO log error
+                print(error ?? "Unknown error")
+                return
+            }
             
             // TODO remove before release
             sleep(5)
@@ -29,17 +33,20 @@ class NetworkManager {
         }.resume()
     }
     
-    func fetchWeatherIcon(with id: String, completionHandler: @escaping (UIImage?) -> Void) {
+    func fetchWeatherIcon(with id: String, completionHandler: @escaping (Data?) -> Void) {
         guard let iconUrl = makeIconRequestUrl(for: id) else { return }
         
-        URLSession.shared.dataTask(with: iconUrl) { data, _, _ in
-            guard let data = data else { return }
+        URLSession.shared.dataTask(with: iconUrl) { data, _, error in
+            guard let data = data else {
+                // TODO log error
+                print(error ?? "Unknown error")
+                return
+            }
             
             // TODO remove before release
             sleep(2)
             
-            let icon = UIImage(data: data)
-            completionHandler(icon)
+            completionHandler(data)
         }.resume()
     }
     

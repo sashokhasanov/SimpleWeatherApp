@@ -70,12 +70,13 @@ class WeatherViewController: UIViewController {
     private func updateWeaterIcon(for iconId: String) {
         startAnimate(view: iconView)
         
-        NetworkManager.shared.fetchWeatherIcon(with: iconId) { icon in
+        NetworkManager.shared.fetchWeatherIcon(with: iconId) { data in
+            
             DispatchQueue.main.async {
                 self.stopAnimateView(view: self.iconView)
             }
             
-            guard let icon = icon else { return }
+            guard let data = data, let icon = UIImage(data: data) else { return }
 
             DispatchQueue.main.async {
                 self.iconView.image = icon
