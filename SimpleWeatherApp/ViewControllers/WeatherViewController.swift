@@ -17,10 +17,13 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var mainInfoView: UIStackView!
     @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var forecastView: UICollectionView!
     
     // MARK: - Private properties
     private let locationManager = CLLocationManager()
     private var lastLocation: CLLocation?
+    
+    private var weatherInfo: WeatherInfo?
     
     // MARK: - Override methods
     override func viewDidLoad() {
@@ -50,24 +53,35 @@ class WeatherViewController: UIViewController {
             }
         
             guard let weatherInfo = weatherInfo else { return }
+            self.weatherInfo = weatherInfo
 
             DispatchQueue.main.async {
-                if let iconId = weatherInfo.weather?[0].icon {
-                    self.updateWeaterIcon(for: iconId)
-                }
-                self.cityLabel.isHidden = false
-                self.cityLabel.text = weatherInfo.name
-                
-                self.temperatureLabel.text = String(format: "%0.f°C", weatherInfo.main?.temp ?? 0)
-                self.feelsLikeLabel.text = String(format: "Ощущается как %0.f°C", weatherInfo.main?.feelsLike ?? 0)
-
-                let description = weatherInfo.weather?[0].weatherDescription ?? ""
-                self.descriptionLabel.text = description.prefix(1).capitalized + description.dropFirst()
+                self.updateCurrentWeatherView()
+                self.forecastView.reloadData()
             }
         }
     }
     
-    private func updateWeaterIcon(for iconId: String) {
+    
+    private func updateCurrentWeatherView() {
+        guard let weatherInfo = weatherInfo else { return }
+        
+        if let iconId = weatherInfo.current?.weather?[0].icon {
+            self.updateWeaterIcon(with: iconId, for: self.iconView)
+        }
+//                self.cityLabel.isHidden = false
+//                self.cityLabel.text = weatherInfo.name
+        
+        self.temperatureLabel.text = String(format: "%0.f°C", weatherInfo.current?.temp ?? 0)
+        self.feelsLikeLabel.text = String(format: "Ощущается как %0.f°C", weatherInfo.current?.feelsLike ?? 0)
+
+        let description = weatherInfo.current?.weather?[0].weatherDescription ?? ""
+        self.descriptionLabel.text = description.prefix(1).capitalized + description.dropFirst()
+
+    }
+    
+    
+    private func updateWeaterIcon(with iconId: String, for imageView: UIImageView) {
         startAnimate(view: iconView)
         
         NetworkManager.shared.fetchWeatherIcon(with: iconId) { data in
@@ -79,7 +93,7 @@ class WeatherViewController: UIViewController {
             guard let data = data, let icon = UIImage(data: data) else { return }
 
             DispatchQueue.main.async {
-                self.iconView.image = icon
+                imageView.image = icon
             }
         }
     }
@@ -119,3 +133,38 @@ extension WeatherViewController: CLLocationManagerDelegate {
         return distanceSignificantlyChanged || significantTimePassed
     }
 }
+
+extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        min(12, weatherInfo?.hourly?.count ?? 0)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "forecastCell", for: indexPath)
+        
+        configureCell(cell, with: weatherInfo?.hourly?[indexPath.item])
+        
+        return cell
+    }
+    
+    func configureCell(_ cell: UICollectionViewCell, with forecastItem: Current?) {
+        guard let forecastCell = cell as? CollectionViewCell else { return }
+        guard let forecastItem = forecastItem else { return }
+    
+        let date = Date(timeIntervalSince1970: Double(forecastItem.dt ?? 0))
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH"
+        formatter.timeZone = TimeZone(secondsFromGMT: weatherInfo?.timezoneOffset ?? 0)
+
+        forecastCell.timeLabel.text = formatter.string(from: date)
+
+        forecastCell.temperatureLabel.text = String(format: "%0.f°C", forecastItem.temp ?? 0)
+        
+        if let iconId = forecastItem.weather?[0].icon {
+            self.updateWeaterIcon(with: iconId, for: forecastCell.weatherIcon)
+        }
+    }
+}
+
+

@@ -54,12 +54,13 @@ class NetworkManager {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.openweathermap.org"
-        components.path = "/data/2.5/weather"
+        components.path = "/data/2.5/onecall"
         components.queryItems = [
             URLQueryItem(name: "lat", value: String(latitude)),
             URLQueryItem(name: "lon", value: String(longtitude)),
             URLQueryItem(name: "units", value: "metric"),
             URLQueryItem(name: "lang", value: "ru"),
+            URLQueryItem(name: "exclude", value: "daily,minutely,alert"),
             URLQueryItem(name: "appid", value: apiKey)
         ]
         

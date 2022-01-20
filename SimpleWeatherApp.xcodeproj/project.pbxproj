@@ -15,6 +15,7 @@
 		2DB62A0E2791E6B400B909B5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DB62A0C2791E6B400B909B5 /* LaunchScreen.storyboard */; };
 		2DB62A182791F58800B909B5 /* WeatherInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB62A172791F58800B909B5 /* WeatherInfo.swift */; };
 		2DB62A1A2791F62000B909B5 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB62A192791F62000B909B5 /* NetworkManager.swift */; };
+		2DB62A212795F78700B909B5 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB62A202795F78600B909B5 /* CollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		2DB62A0F2791E6B400B909B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2DB62A172791F58800B909B5 /* WeatherInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInfo.swift; sourceTree = "<group>"; };
 		2DB62A192791F62000B909B5 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		2DB62A202795F78600B909B5 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 		2DB62A1B27937C5A00B909B5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				2DB62A202795F78600B909B5 /* CollectionViewCell.swift */,
 				2DB62A052791E6AD00B909B5 /* WeatherViewController.swift */,
 			);
 			path = ViewControllers;
@@ -186,6 +189,7 @@
 			files = (
 				2DB62A182791F58800B909B5 /* WeatherInfo.swift in Sources */,
 				2DB62A062791E6AD00B909B5 /* WeatherViewController.swift in Sources */,
+				2DB62A212795F78700B909B5 /* CollectionViewCell.swift in Sources */,
 				2DB62A1A2791F62000B909B5 /* NetworkManager.swift in Sources */,
 				2DB62A022791E6AD00B909B5 /* AppDelegate.swift in Sources */,
 				2DB62A042791E6AD00B909B5 /* SceneDelegate.swift in Sources */,
