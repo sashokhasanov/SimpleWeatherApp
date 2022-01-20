@@ -7,6 +7,13 @@
 
 import Foundation
 
+enum NetworkError: Error {
+    case transportError(Error)
+    case noData
+    case serverError(statusCode: Int)
+    case decodingError(Error)
+}
+
 class NetworkManager {
     
     static let shared = NetworkManager()
@@ -15,39 +22,42 @@ class NetworkManager {
     
     private init() {}
     
-    func fetchWeatherData(latitude: Double, longtitude: Double, completionHandler: @escaping (WeatherInfo?) -> Void) {
+    func fetchWeatherData(latitude: Double, longtitude: Double, completionHandler: @escaping (Result<WeatherInfo, NetworkError>) -> Void) {
         guard let weatherUrl = makeWeatherRquestUrl(latitude, longtitude) else { return }
         
-        URLSession.shared.dataTask(with: weatherUrl) { data, _, error in
+        URLSession.shared.dataTask(with: weatherUrl) { data, response, error in
+            if let error = error {
+                completionHandler(.failure(.transportError(error)))
+                return
+            }
+            
+            if let response = response as? HTTPURLResponse, !(200...299).contains(response.statusCode) {
+                completionHandler(.failure(.serverError(statusCode: response.statusCode)))
+                return
+            }
+            
             guard let data = data else {
-                // TODO log error
-                print(error ?? "Unknown error")
+                completionHandler(.failure(.noData))
                 return
             }
             
             // TODO remove before release
             sleep(5)
             
-            let weatherInfo = try? JSONDecoder().decode(WeatherInfo.self, from: data)
-            completionHandler(weatherInfo)
+            do {
+                let weatherInfo = try JSONDecoder().decode(WeatherInfo.self, from: data)
+                completionHandler(.success(weatherInfo))
+            } catch {
+                completionHandler(.failure(.decodingError(error)))
+            }
         }.resume()
     }
     
-    func fetchWeatherIcon(with id: String, completionHandler: @escaping (Data?) -> Void) {
-        guard let iconUrl = makeIconRequestUrl(for: id) else { return }
-        
-        URLSession.shared.dataTask(with: iconUrl) { data, _, error in
-            guard let data = data else {
-                // TODO log error
-                print(error ?? "Unknown error")
-                return
-            }
-            
-            // TODO remove before release
-            sleep(2)
-            
-            completionHandler(data)
-        }.resume()
+    func fetchWeatherIcon(with id: String) -> Data? {
+        guard let iconUrl = makeIconRequestUrl(for: id) else { return nil }
+        // TODO remove before release
+        sleep(2)
+        return try? Data(contentsOf: iconUrl)
     }
     
     private func makeWeatherRquestUrl(_ latitude: Double, _ longtitude: Double) -> URL? {

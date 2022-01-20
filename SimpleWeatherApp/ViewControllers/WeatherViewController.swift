@@ -46,17 +46,22 @@ class WeatherViewController: UIViewController {
         cityLabel.isHidden = true
         startAnimate(view: mainInfoView)
 
-        NetworkManager.shared.fetchWeatherData(latitude: latitude, longtitude: longtiture) { weatherInfo in
+        NetworkManager.shared.fetchWeatherData(latitude: latitude, longtitude: longtiture) { result in
             DispatchQueue.main.async {
                 self.stopAnimateView(view: self.mainInfoView)
             }
-        
-            guard let weatherInfo = weatherInfo else { return }
-            self.weatherInfo = weatherInfo
-
-            DispatchQueue.main.async {
-                self.updateCurrentWeatherView()
-                self.forecastView.reloadData()
+            
+            switch result {
+            case .failure(let error):
+                // TODO log error
+                print(error)
+            case .success(let weatherInfo):
+                self.weatherInfo = weatherInfo
+                
+                DispatchQueue.main.async {
+                    self.updateCurrentWeatherView()
+                    self.forecastView.reloadSections(IndexSet(integersIn: 0...0))
+                }
             }
         }
     }
@@ -83,16 +88,17 @@ class WeatherViewController: UIViewController {
     private func updateWeaterIcon(with iconId: String, for imageView: UIImageView) {
         startAnimate(view: imageView)
         
-        NetworkManager.shared.fetchWeatherIcon(with: iconId) { data in
+        DispatchQueue.global().async {
+            let data = NetworkManager.shared.fetchWeatherIcon(with: iconId)
             
             DispatchQueue.main.async {
                 self.stopAnimateView(view: imageView)
             }
             
-            guard let data = data, let icon = UIImage(data: data) else { return }
+            guard let data = data else { return }
 
             DispatchQueue.main.async {
-                imageView.image = icon
+                imageView.image = UIImage(data: data)
             }
         }
     }
