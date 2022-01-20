@@ -47,7 +47,6 @@ class WeatherViewController: UIViewController {
         startAnimate(view: mainInfoView)
 
         NetworkManager.shared.fetchWeatherData(latitude: latitude, longtitude: longtiture) { weatherInfo in
-
             DispatchQueue.main.async {
                 self.stopAnimateView(view: self.mainInfoView)
             }
@@ -61,14 +60,15 @@ class WeatherViewController: UIViewController {
             }
         }
     }
-    
-    
+
     private func updateCurrentWeatherView() {
         guard let weatherInfo = weatherInfo else { return }
         
         if let iconId = weatherInfo.current?.weather?[0].icon {
             self.updateWeaterIcon(with: iconId, for: self.iconView)
         }
+        
+        // TODO city label
 //                self.cityLabel.isHidden = false
 //                self.cityLabel.text = weatherInfo.name
         
@@ -80,14 +80,13 @@ class WeatherViewController: UIViewController {
 
     }
     
-    
     private func updateWeaterIcon(with iconId: String, for imageView: UIImageView) {
-        startAnimate(view: iconView)
+        startAnimate(view: imageView)
         
         NetworkManager.shared.fetchWeatherIcon(with: iconId) { data in
             
             DispatchQueue.main.async {
-                self.stopAnimateView(view: self.iconView)
+                self.stopAnimateView(view: imageView)
             }
             
             guard let data = data, let icon = UIImage(data: data) else { return }
@@ -127,7 +126,7 @@ extension WeatherViewController: CLLocationManagerDelegate {
     func needUpdateWeather(with location: CLLocation) -> Bool {
         guard let lastLocation = lastLocation else { return true }
         
-        let distanceSignificantlyChanged = location.distance(from: lastLocation) > 500
+        let distanceSignificantlyChanged = location.distance(from: lastLocation) > 1000
         let significantTimePassed = lastLocation.timestamp.distance(to: location.timestamp) > 60
         
         return distanceSignificantlyChanged || significantTimePassed
@@ -148,22 +147,28 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
         return cell
     }
     
-    func configureCell(_ cell: UICollectionViewCell, with forecastItem: Current?) {
+    private func configureCell(_ cell: UICollectionViewCell, with forecastItem: Current?) {
         guard let forecastCell = cell as? CollectionViewCell else { return }
         guard let forecastItem = forecastItem else { return }
     
-        let date = Date(timeIntervalSince1970: Double(forecastItem.dt ?? 0))
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH"
-        formatter.timeZone = TimeZone(secondsFromGMT: weatherInfo?.timezoneOffset ?? 0)
-
-        forecastCell.timeLabel.text = formatter.string(from: date)
+        forecastCell.timeLabel.text =
+            getHourFromTimestamp(forecastItem.dt ?? 0, offset: weatherInfo?.timezoneOffset ?? 0)
 
         forecastCell.temperatureLabel.text = String(format: "%0.f°C", forecastItem.temp ?? 0)
         
         if let iconId = forecastItem.weather?[0].icon {
-            self.updateWeaterIcon(with: iconId, for: forecastCell.weatherIcon)
+            updateWeaterIcon(with: iconId, for: forecastCell.weatherIcon)
         }
+    }
+    
+    private func getHourFromTimestamp(_ timestamp: Int, offset timezoneOffset: Int) -> String {
+        let date = Date(timeIntervalSince1970: Double(timestamp))
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH"
+        formatter.timeZone = TimeZone(secondsFromGMT: timezoneOffset)
+        
+        return formatter.string(from: date)
     }
 }
 
