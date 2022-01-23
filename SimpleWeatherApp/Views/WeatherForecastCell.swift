@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CollectionViewCell: UICollectionViewCell {
+class WeatherForecastCell: UICollectionViewCell {
 
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var weatherIcon: UIImageView!
@@ -46,7 +46,11 @@ class CollectionViewCell: UICollectionViewCell {
             return
         }
         
+        weatherIcon.startFadeAnimation()
+        
         IconService.shared.getIcon(with: iconId) { result in
+            self.weatherIcon.stopFadeAnimation()
+            
             switch result {
             case .success(let icon):
                 if iconId == self.iconId {

@@ -44,12 +44,11 @@ class WeatherViewController: UIViewController {
     
     private func updateWeather(latitude: Double, longtiture: Double) {
         cityLabel.isHidden = true
-        startAnimate(view: mainInfoView)
+        mainInfoView.startFadeAnimation()
 
         NetworkManager.shared.fetchWeatherData(latitude: latitude, longtitude: longtiture) { result in
-            DispatchQueue.main.async {
-                self.stopAnimateView(view: self.mainInfoView)
-            }
+
+            self.mainInfoView.stopFadeAnimation()
             
             switch result {
             case .failure(let error):
@@ -58,10 +57,8 @@ class WeatherViewController: UIViewController {
             case .success(let weatherInfo):
                 self.weatherInfo = weatherInfo
                 
-                DispatchQueue.main.async {
-                    self.updateCurrentWeatherView()
-                    self.forecastView.reloadSections(IndexSet(integersIn: 0...0))
-                }
+                self.updateCurrentWeatherView()
+                self.forecastView.reloadSections(IndexSet(integersIn: 0...0))
             }
         }
     }
@@ -86,11 +83,11 @@ class WeatherViewController: UIViewController {
     }
     
     private func updateWeaterIcon(with iconId: String) {
-        startAnimate(view: self.iconView)
+        iconView.startFadeAnimation()
         
         IconService.shared.getIcon(with: iconId) { result in
             
-            self.stopAnimateView(view: self.iconView)
+            self.iconView.stopFadeAnimation()
             
             switch result {
             case .success(let icon):
@@ -100,17 +97,6 @@ class WeatherViewController: UIViewController {
                 print(error)
             }
         }
-    }
-    
-    private func startAnimate(view: UIView) {
-        UIView.animate(withDuration: 0.85, delay: 0, options: [.repeat, .autoreverse] ) {
-            view.alpha = 0
-        }
-    }
-    
-    private func stopAnimateView(view: UIView) {
-        view.layer.removeAllAnimations()
-        view.alpha = 1
     }
 }
 
@@ -180,7 +166,7 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "forecastCell", for: indexPath)
         
-        if let forecastCell = cell as? CollectionViewCell, let current = weatherInfo?.hourly?[indexPath.item] {
+        if let forecastCell = cell as? WeatherForecastCell, let current = weatherInfo?.hourly?[indexPath.item] {
             forecastCell.configure(with: current, timeZoneOffset: weatherInfo?.timezoneOffset ?? 0)
         }
         

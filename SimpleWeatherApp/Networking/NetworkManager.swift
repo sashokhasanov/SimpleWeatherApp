@@ -111,3 +111,4 @@ class NetworkManager {
         return components.url
     }
 }
+
