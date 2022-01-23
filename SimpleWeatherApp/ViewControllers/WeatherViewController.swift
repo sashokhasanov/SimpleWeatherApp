@@ -124,6 +124,17 @@ extension WeatherViewController: CLLocationManagerDelegate {
         if needUpdateWeather(with: location) {
             lastLocation = location
             
+            getPlace(for: location) { placemark in
+                guard let placemark = placemark else {
+                    return
+                }
+
+                DispatchQueue.main.async {
+                    self.cityLabel.isHidden = false
+                    self.cityLabel.text = placemark.locality
+                }
+            }
+            
             updateWeather(latitude: location.coordinate.latitude,
                           longtiture: location.coordinate.longitude)
         }
@@ -136,6 +147,28 @@ extension WeatherViewController: CLLocationManagerDelegate {
         let significantTimePassed = lastLocation.timestamp.distance(to: location.timestamp) > 60
         
         return distanceSignificantlyChanged || significantTimePassed
+    }
+    
+    
+    func getPlace(for location: CLLocation, completion: @escaping (CLPlacemark?) -> Void) {
+            
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location) { placemarks, error in
+                
+            guard error == nil else {
+                print(error!.localizedDescription)
+                completion(nil)
+                return
+            }
+                
+            guard let placemark = placemarks?[0] else {
+                print("*** Error in \(#function): placemark is nil")
+                completion(nil)
+                return
+            }
+                
+            completion(placemark)
+        }
     }
 }
 
