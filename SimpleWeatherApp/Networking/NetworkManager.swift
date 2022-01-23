@@ -46,18 +46,43 @@ class NetworkManager {
             
             do {
                 let weatherInfo = try JSONDecoder().decode(WeatherInfo.self, from: data)
-                completionHandler(.success(weatherInfo))
+                
+                DispatchQueue.main.async {
+                    completionHandler(.success(weatherInfo))
+                }
             } catch {
                 completionHandler(.failure(.decodingError(error)))
             }
         }.resume()
     }
     
-    func fetchWeatherIcon(with id: String) -> Data? {
-        guard let iconUrl = makeIconRequestUrl(for: id) else { return nil }
-        // TODO remove before release
-        sleep(2)
-        return try? Data(contentsOf: iconUrl)
+    func fetchWeatherIcon(with id: String, completionHandler: @escaping (Result<Data, NetworkError>) -> Void) {
+        guard let iconUrl = makeIconRequestUrl(for: id) else { return }
+        
+        URLSession.shared.dataTask(with: iconUrl) { data, response, error in
+            if let error = error {
+                completionHandler(.failure(.transportError(error)))
+                return
+            }
+            
+            if let response = response as? HTTPURLResponse, !(200...299).contains(response.statusCode) {
+                completionHandler(.failure(.serverError(statusCode: response.statusCode)))
+                return
+            }
+            
+            guard let data = data else {
+                completionHandler(.failure(.noData))
+                return
+            }
+            
+            // TODO remove before release
+            sleep(2)
+            
+            DispatchQueue.main.async {
+                completionHandler(.success(data))
+            }
+        }.resume()
+        
     }
     
     private func makeWeatherRquestUrl(_ latitude: Double, _ longtitude: Double) -> URL? {

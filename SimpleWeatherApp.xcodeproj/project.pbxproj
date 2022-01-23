@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D51F129279DBEEA00963858 /* IconService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D51F128279DBEEA00963858 /* IconService.swift */; };
 		2DB62A022791E6AD00B909B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB62A012791E6AD00B909B5 /* AppDelegate.swift */; };
 		2DB62A042791E6AD00B909B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB62A032791E6AD00B909B5 /* SceneDelegate.swift */; };
 		2DB62A062791E6AD00B909B5 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB62A052791E6AD00B909B5 /* WeatherViewController.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D51F128279DBEEA00963858 /* IconService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconService.swift; sourceTree = "<group>"; };
 		2DB629FE2791E6AD00B909B5 /* SimpleWeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleWeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DB62A012791E6AD00B909B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2DB62A032791E6AD00B909B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				2DB62A202795F78600B909B5 /* CollectionViewCell.swift */,
+				2D51F128279DBEEA00963858 /* IconService.swift */,
 				2DB62A052791E6AD00B909B5 /* WeatherViewController.swift */,
 			);
 			path = ViewControllers;
@@ -192,6 +195,7 @@
 				2DB62A212795F78700B909B5 /* CollectionViewCell.swift in Sources */,
 				2DB62A1A2791F62000B909B5 /* NetworkManager.swift in Sources */,
 				2DB62A022791E6AD00B909B5 /* AppDelegate.swift in Sources */,
+				2D51F129279DBEEA00963858 /* IconService.swift in Sources */,
 				2DB62A042791E6AD00B909B5 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

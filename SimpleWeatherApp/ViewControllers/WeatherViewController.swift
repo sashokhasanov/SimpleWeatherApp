@@ -70,7 +70,7 @@ class WeatherViewController: UIViewController {
         guard let weatherInfo = weatherInfo else { return }
         
         if let iconId = weatherInfo.current?.weather?[0].icon {
-            self.updateWeaterIcon(with: iconId, for: self.iconView)
+            self.updateWeaterIcon(with: iconId)
         }
         
         // TODO city label
@@ -85,20 +85,19 @@ class WeatherViewController: UIViewController {
 
     }
     
-    private func updateWeaterIcon(with iconId: String, for imageView: UIImageView) {
-        startAnimate(view: imageView)
+    private func updateWeaterIcon(with iconId: String) {
+        startAnimate(view: self.iconView)
         
-        DispatchQueue.global().async {
-            let data = NetworkManager.shared.fetchWeatherIcon(with: iconId)
+        IconService.shared.getIcon(with: iconId) { result in
             
-            DispatchQueue.main.async {
-                self.stopAnimateView(view: imageView)
-            }
+            self.stopAnimateView(view: self.iconView)
             
-            guard let data = data else { return }
-
-            DispatchQueue.main.async {
-                imageView.image = UIImage(data: data)
+            switch result {
+            case .success(let icon):
+                self.iconView.image = icon
+            case .failure(let error):
+                // TODO log error
+                print(error)
             }
         }
     }
@@ -181,34 +180,38 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "forecastCell", for: indexPath)
         
-        configureCell(cell, with: weatherInfo?.hourly?[indexPath.item])
+        if let forecastCell = cell as? CollectionViewCell, let current = weatherInfo?.hourly?[indexPath.item] {
+            forecastCell.configure(with: current, timeZoneOffset: weatherInfo?.timezoneOffset ?? 0)
+        }
+        
+//        configureCell(cell, with: weatherInfo?.hourly?[indexPath.item])
         
         return cell
     }
     
-    private func configureCell(_ cell: UICollectionViewCell, with forecastItem: Current?) {
-        guard let forecastCell = cell as? CollectionViewCell else { return }
-        guard let forecastItem = forecastItem else { return }
+//    private func configureCell(_ cell: UICollectionViewCell, with forecastItem: Current?) {
+//        guard let forecastCell = cell as? CollectionViewCell else { return }
+//        guard let forecastItem = forecastItem else { return }
+//
+//        forecastCell.timeLabel.text =
+//            getHourFromTimestamp(forecastItem.dt ?? 0, offset: weatherInfo?.timezoneOffset ?? 0)
+//
+//        forecastCell.temperatureLabel.text = String(format: "%0.f°C", forecastItem.temp ?? 0)
+//
+//        if let iconId = forecastItem.weather?[0].icon {
+//            updateWeaterIcon(with: iconId, for: forecastCell.weatherIcon)
+//        }
+//    }
     
-        forecastCell.timeLabel.text =
-            getHourFromTimestamp(forecastItem.dt ?? 0, offset: weatherInfo?.timezoneOffset ?? 0)
-
-        forecastCell.temperatureLabel.text = String(format: "%0.f°C", forecastItem.temp ?? 0)
-        
-        if let iconId = forecastItem.weather?[0].icon {
-            updateWeaterIcon(with: iconId, for: forecastCell.weatherIcon)
-        }
-    }
-    
-    private func getHourFromTimestamp(_ timestamp: Int, offset timezoneOffset: Int) -> String {
-        let date = Date(timeIntervalSince1970: Double(timestamp))
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH"
-        formatter.timeZone = TimeZone(secondsFromGMT: timezoneOffset)
-        
-        return formatter.string(from: date)
-    }
+//    private func getHourFromTimestamp(_ timestamp: Int, offset timezoneOffset: Int) -> String {
+//        let date = Date(timeIntervalSince1970: Double(timestamp))
+//
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "HH"
+//        formatter.timeZone = TimeZone(secondsFromGMT: timezoneOffset)
+//
+//        return formatter.string(from: date)
+//    }
 }
 
 
