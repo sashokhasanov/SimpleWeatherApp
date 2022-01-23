@@ -39,7 +39,6 @@ class WeatherForecastCell: UICollectionViewCell {
         return formatter.string(from: date)
     }
     
-    
     private func updateWeaterIcon() {
         
         guard let iconId = iconId else {
@@ -48,8 +47,11 @@ class WeatherForecastCell: UICollectionViewCell {
         
         weatherIcon.startFadeAnimation()
         
-        IconService.shared.getIcon(with: iconId) { result in
-            self.weatherIcon.stopFadeAnimation()
+        ImageManager.shared.getIcon(with: iconId) { result in
+            
+            DispatchQueue.main.async {
+                self.weatherIcon.stopFadeAnimation()
+            }
             
             switch result {
             case .success(let icon):
@@ -61,26 +63,5 @@ class WeatherForecastCell: UICollectionViewCell {
                 print(error)
             }
         }
-        
-//        startAnimate(view: imageView)
-        
-//        DispatchQueue.global().async {
-////            let data = NetworkManager.shared.fetchWeatherIcon(with: iconId)
-//
-////            DispatchQueue.main.async {
-////                self.stopAnimateView(view: imageView)
-////            }
-//
-//            guard let data = data else { return }
-//
-//            DispatchQueue.main.async {
-//                if (iconId == self.iconId) {
-//                    self.weatherIcon.image = UIImage(data: data)
-//                }
-//            }
-//        }
     }
-    
-    
-    
 }

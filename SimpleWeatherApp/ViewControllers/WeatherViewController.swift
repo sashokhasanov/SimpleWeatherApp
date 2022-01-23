@@ -66,28 +66,27 @@ class WeatherViewController: UIViewController {
     private func updateCurrentWeatherView() {
         guard let weatherInfo = weatherInfo else { return }
         
-        if let iconId = weatherInfo.current?.weather?[0].icon {
-            self.updateWeaterIcon(with: iconId)
-        }
+        updateWeaterIcon()
         
-        // TODO city label
-//                self.cityLabel.isHidden = false
-//                self.cityLabel.text = weatherInfo.name
-        
-        self.temperatureLabel.text = String(format: "%0.f°C", weatherInfo.current?.temp ?? 0)
-        self.feelsLikeLabel.text = String(format: "Ощущается как %0.f°C", weatherInfo.current?.feelsLike ?? 0)
+        temperatureLabel.text = String(format: "%0.f°C", weatherInfo.current?.temp ?? 0)
+        feelsLikeLabel.text = String(format: "Ощущается как %0.f°C", weatherInfo.current?.feelsLike ?? 0)
 
         let description = weatherInfo.current?.weather?[0].weatherDescription ?? ""
-        self.descriptionLabel.text = description.prefix(1).capitalized + description.dropFirst()
-
+        descriptionLabel.text = description.prefix(1).capitalized + description.dropFirst()
     }
     
-    private func updateWeaterIcon(with iconId: String) {
+    private func updateWeaterIcon() {
+        guard let iconId = weatherInfo?.current?.weather?[0].icon else {
+            return
+        }
+        
         iconView.startFadeAnimation()
         
-        IconService.shared.getIcon(with: iconId) { result in
+        ImageManager.shared.getIcon(with: iconId) { result in
             
-            self.iconView.stopFadeAnimation()
+            DispatchQueue.main.async {
+                self.iconView.stopFadeAnimation()
+            }
             
             switch result {
             case .success(let icon):
@@ -134,7 +133,6 @@ extension WeatherViewController: CLLocationManagerDelegate {
         return distanceSignificantlyChanged || significantTimePassed
     }
     
-    
     func getPlace(for location: CLLocation, completion: @escaping (CLPlacemark?) -> Void) {
             
         let geocoder = CLGeocoder()
@@ -170,34 +168,6 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
             forecastCell.configure(with: current, timeZoneOffset: weatherInfo?.timezoneOffset ?? 0)
         }
         
-//        configureCell(cell, with: weatherInfo?.hourly?[indexPath.item])
-        
         return cell
     }
-    
-//    private func configureCell(_ cell: UICollectionViewCell, with forecastItem: Current?) {
-//        guard let forecastCell = cell as? CollectionViewCell else { return }
-//        guard let forecastItem = forecastItem else { return }
-//
-//        forecastCell.timeLabel.text =
-//            getHourFromTimestamp(forecastItem.dt ?? 0, offset: weatherInfo?.timezoneOffset ?? 0)
-//
-//        forecastCell.temperatureLabel.text = String(format: "%0.f°C", forecastItem.temp ?? 0)
-//
-//        if let iconId = forecastItem.weather?[0].icon {
-//            updateWeaterIcon(with: iconId, for: forecastCell.weatherIcon)
-//        }
-//    }
-    
-//    private func getHourFromTimestamp(_ timestamp: Int, offset timezoneOffset: Int) -> String {
-//        let date = Date(timeIntervalSince1970: Double(timestamp))
-//
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "HH"
-//        formatter.timeZone = TimeZone(secondsFromGMT: timezoneOffset)
-//
-//        return formatter.string(from: date)
-//    }
 }
-
-

@@ -1,5 +1,5 @@
 //
-//  ImageCache.swift
+//  ImageManager.swift
 //  SimpleWeatherApp
 //
 //  Created by Сашок on 23.01.2022.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class IconService {
+class ImageManager {
     
-    static let shared = IconService()
+    static let shared = ImageManager()
     
     private let imageCache = NSCache<NSString, UIImage>()
     
