@@ -71,19 +71,18 @@ class WeatherViewController: UIViewController {
         temperatureLabel.text = String(format: "%0.f°C", weatherInfo.current?.temp ?? 0)
         feelsLikeLabel.text = String(format: "Ощущается как %0.f°C", weatherInfo.current?.feelsLike ?? 0)
 
-        let description = weatherInfo.current?.weather?[0].weatherDescription ?? ""
+        let description = weatherInfo.current?.weather?.first?.weatherDescription ?? ""
         descriptionLabel.text = description.prefix(1).capitalized + description.dropFirst()
     }
     
     private func updateWeaterIcon() {
-        guard let iconId = weatherInfo?.current?.weather?[0].icon else {
+        guard let iconId = weatherInfo?.current?.weather?.first?.icon else {
             return
         }
         
         iconView.startFadeAnimation()
         
         ImageManager.shared.getIcon(with: iconId) { result in
-            
             DispatchQueue.main.async {
                 self.iconView.stopFadeAnimation()
             }
@@ -97,28 +96,32 @@ class WeatherViewController: UIViewController {
             }
         }
     }
+    
+    func updateCurrentCity(with location: CLLocation) {
+        LocationManager.shared.getCity(from: location) { result in
+            switch result{
+            case .success(let placemark):
+                DispatchQueue.main.async {
+                    self.cityLabel.isHidden = false
+                    self.cityLabel.text = placemark.locality
+                }
+            case .failure(let error):
+                // TODO log error
+                print(error)
+            }
+        }
+    }
 }
 
 extension WeatherViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
         guard let location = locations.last else { return }
         
         if needUpdateWeather(with: location) {
             lastLocation = location
             
-            getPlace(for: location) { placemark in
-                guard let placemark = placemark else {
-                    return
-                }
-
-                DispatchQueue.main.async {
-                    self.cityLabel.isHidden = false
-                    self.cityLabel.text = placemark.locality
-                }
-            }
-            
+            updateCurrentCity(with: location)
             updateWeather(latitude: location.coordinate.latitude,
                           longtiture: location.coordinate.longitude)
         }
@@ -131,27 +134,6 @@ extension WeatherViewController: CLLocationManagerDelegate {
         let significantTimePassed = lastLocation.timestamp.distance(to: location.timestamp) > 60
         
         return distanceSignificantlyChanged || significantTimePassed
-    }
-    
-    func getPlace(for location: CLLocation, completion: @escaping (CLPlacemark?) -> Void) {
-            
-        let geocoder = CLGeocoder()
-        geocoder.reverseGeocodeLocation(location) { placemarks, error in
-                
-            guard error == nil else {
-                print(error!.localizedDescription)
-                completion(nil)
-                return
-            }
-                
-            guard let placemark = placemarks?[0] else {
-                print("*** Error in \(#function): placemark is nil")
-                completion(nil)
-                return
-            }
-                
-            completion(placemark)
-        }
     }
 }
 

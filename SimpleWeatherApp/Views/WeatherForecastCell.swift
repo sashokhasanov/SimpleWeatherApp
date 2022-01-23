@@ -25,7 +25,7 @@ class WeatherForecastCell: UICollectionViewCell {
 
         temperatureLabel.text = String(format: "%0.f°C", forecastItem.temp ?? 0)
         
-        iconId = forecastItem.weather?[0].icon
+        iconId = forecastItem.weather?.first?.icon
         updateWeaterIcon()
     }
     
@@ -40,7 +40,6 @@ class WeatherForecastCell: UICollectionViewCell {
     }
     
     private func updateWeaterIcon() {
-        
         guard let iconId = iconId else {
             return
         }
@@ -48,7 +47,6 @@ class WeatherForecastCell: UICollectionViewCell {
         weatherIcon.startFadeAnimation()
         
         ImageManager.shared.getIcon(with: iconId) { result in
-            
             DispatchQueue.main.async {
                 self.weatherIcon.stopFadeAnimation()
             }

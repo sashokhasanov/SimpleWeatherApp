@@ -17,6 +17,7 @@ class ImageManager {
         
         if let cachedImage = imageCache.object(forKey: iconId as NSString) {
             completion(.success(cachedImage))
+            return
         }
         
         NetworkManager.shared.fetchWeatherIcon(with: iconId) { result in

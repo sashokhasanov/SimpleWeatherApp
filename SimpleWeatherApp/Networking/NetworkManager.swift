@@ -82,7 +82,6 @@ class NetworkManager {
                 completionHandler(.success(data))
             }
         }.resume()
-        
     }
     
     private func makeWeatherRquestUrl(_ latitude: Double, _ longtitude: Double) -> URL? {
