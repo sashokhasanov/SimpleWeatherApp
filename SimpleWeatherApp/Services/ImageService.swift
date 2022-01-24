@@ -15,7 +15,6 @@ class ImageService {
     private init() {}
     
     func getIcon(with iconId: String, completion: @escaping(Result<UIImage, NetworkError>) -> Void) {
-        
         if let cachedImage = imageCache.object(forKey: iconId as NSString) {
             completion(.success(cachedImage))
             return
