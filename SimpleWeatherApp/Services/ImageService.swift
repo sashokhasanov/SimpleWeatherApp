@@ -8,7 +8,6 @@
 import UIKit
 
 class ImageService {
-    
     static let shared = ImageService()
     
     private let imageCache = NSCache<NSString, UIImage>()

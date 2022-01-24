@@ -15,7 +15,7 @@ class WeatherService {
     private init() {}
     
     func getWeatherData(latitude: Double, longtitude: Double, completion: @escaping (Result<WeatherInfo, NetworkError>) -> Void) {
-        guard let weatherUrl = makeWeatherRquestUrl(latitude, longtitude) else { return }
+        guard let weatherUrl = makeWeatherRequestUrl(latitude, longtitude) else { return }
         
         NetworkManager.shared.fetchData(from: weatherUrl) { result in
             
@@ -39,7 +39,7 @@ class WeatherService {
         }
     }
     
-    private func makeWeatherRquestUrl(_ latitude: Double, _ longtitude: Double) -> URL? {
+    private func makeWeatherRequestUrl(_ latitude: Double, _ longtitude: Double) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.openweathermap.org"
