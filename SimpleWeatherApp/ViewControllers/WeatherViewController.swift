@@ -46,7 +46,7 @@ class WeatherViewController: UIViewController {
         cityLabel.isHidden = true
         mainInfoView.startFadeAnimation()
 
-        NetworkManager.shared.fetchWeatherData(latitude: latitude, longtitude: longtiture) { result in
+        WeatherService.shared.getWeatherData(latitude: latitude, longtitude: longtiture) { result in
 
             self.mainInfoView.stopFadeAnimation()
             
@@ -82,7 +82,7 @@ class WeatherViewController: UIViewController {
         
         iconView.startFadeAnimation()
         
-        ImageManager.shared.getIcon(with: iconId) { result in
+        ImageService.shared.getIcon(with: iconId) { result in
             DispatchQueue.main.async {
                 self.iconView.stopFadeAnimation()
             }
@@ -98,7 +98,7 @@ class WeatherViewController: UIViewController {
     }
     
     func updateCurrentCity(with location: CLLocation) {
-        LocationManager.shared.getCity(from: location) { result in
+        LocationService.shared.getCity(from: location) { result in
             switch result{
             case .success(let placemark):
                 DispatchQueue.main.async {

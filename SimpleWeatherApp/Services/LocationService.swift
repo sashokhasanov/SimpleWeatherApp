@@ -8,8 +8,8 @@
 import Foundation
 import CoreLocation
 
-class LocationManager {
-    static let shared = LocationManager()
+class LocationService {
+    static let shared = LocationService()
     
     func getCity(from location: CLLocation, completion: @escaping (Result<CLPlacemark, Error>) -> Void) {
         

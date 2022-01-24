@@ -46,7 +46,7 @@ class WeatherForecastCell: UICollectionViewCell {
         
         weatherIcon.startFadeAnimation()
         
-        ImageManager.shared.getIcon(with: iconId) { result in
+        ImageService.shared.getIcon(with: iconId) { result in
             DispatchQueue.main.async {
                 self.weatherIcon.stopFadeAnimation()
             }

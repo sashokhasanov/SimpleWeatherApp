@@ -7,11 +7,13 @@
 
 import UIKit
 
-class ImageManager {
+class ImageService {
     
-    static let shared = ImageManager()
+    static let shared = ImageService()
     
     private let imageCache = NSCache<NSString, UIImage>()
+    
+    private init() {}
     
     func getIcon(with iconId: String, completion: @escaping(Result<UIImage, NetworkError>) -> Void) {
         
@@ -20,17 +22,32 @@ class ImageManager {
             return
         }
         
-        NetworkManager.shared.fetchWeatherIcon(with: iconId) { result in
+        guard let iconUrl = makeIconRequestUrl(for: iconId) else { return }
+        
+        NetworkManager.shared.fetchData(from: iconUrl) { result in
+            // TODO remove before release
+            sleep(2)
+            
             switch result {
             case .success(let data):
                 guard let icon = UIImage(data: data) else { return }
                 self.imageCache.setObject(icon, forKey: iconId as NSString)
-                completion(.success(icon))
+                
+                DispatchQueue.main.async {
+                    completion(.success(icon))
+                }
             case .failure(let error):
                 completion(.failure(error))
             }
         }
     }
     
-    private init() {}
+    private func makeIconRequestUrl(for iconId: String) -> URL? {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "openweathermap.org"
+        components.path = "/img/wn/\(iconId)@2x.png"
+
+        return components.url
+    }
 }
