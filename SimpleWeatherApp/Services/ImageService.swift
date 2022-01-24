@@ -1,5 +1,5 @@
 //
-//  ImageManager.swift
+//  ImageService.swift
 //  SimpleWeatherApp
 //
 //  Created by Сашок on 23.01.2022.
