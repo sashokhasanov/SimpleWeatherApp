@@ -12,7 +12,6 @@ class LocationService {
     static let shared = LocationService()
     
     func getCity(from location: CLLocation, completion: @escaping (Result<CLPlacemark, Error>) -> Void) {
-        
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location) { placemarks, error in
             
