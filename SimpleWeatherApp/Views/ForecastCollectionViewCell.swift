@@ -1,14 +1,16 @@
 //
-//  CollectionViewCell.swift
+//  ForecastCollectionViewCell.swift
 //  SimpleWeatherApp
 //
-//  Created by Сашок on 17.01.2022.
+//  Created by Сашок on 16.02.2022.
 //
 
 import UIKit
 
-class WeatherForecastCell: UICollectionViewCell {
+class ForecastCollectionViewCell: UICollectionViewCell {
 
+    static let reuseId = "ForecastCollectionViewCell"
+    
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var weatherIcon: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -19,6 +21,15 @@ class WeatherForecastCell: UICollectionViewCell {
         }
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+
+    static func nib() -> UINib {
+        UINib(nibName: reuseId, bundle: nil)
+    }
+    
     func configure(with forecastItem: Current, timeZoneOffset: Int) {
         timeLabel.text =
             getHourFromTimestamp(forecastItem.dt ?? 0, offset: timeZoneOffset)
@@ -26,7 +37,6 @@ class WeatherForecastCell: UICollectionViewCell {
         temperatureLabel.text = String(format: "%0.f°C", forecastItem.temp ?? 0)
         
         iconId = forecastItem.weather?.first?.icon
-//        updateWeaterIcon()
     }
     
     private func getHourFromTimestamp(_ timestamp: Int, offset timezoneOffset: Int) -> String {
@@ -44,13 +54,7 @@ class WeatherForecastCell: UICollectionViewCell {
             return
         }
         
-        weatherIcon.startFadeAnimation()
-        
         ImageService.shared.getIcon(with: iconId) { result in
-            DispatchQueue.main.async {
-                self.weatherIcon.stopFadeAnimation()
-            }
-            
             switch result {
             case .success(let icon):
                 if iconId == self.iconId {
