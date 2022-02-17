@@ -8,24 +8,23 @@
 import UIKit
 
 class ForecastCollectionViewCell: UICollectionViewCell {
-
-    static let reuseId = "ForecastCollectionViewCell"
     
+    // MARK: - IBOutlets
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var weatherIcon: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     
+    // MARK: - Internal properties
+    static let reuseId = "ForecastCollectionViewCell"
+    
+    // MARK: - Private properties
     private var iconId: String? {
         didSet {
             updateWeaterIcon()
         }
     }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
 
+    // MARK: - Internal methods
     static func nib() -> UINib {
         UINib(nibName: reuseId, bundle: nil)
     }
@@ -39,6 +38,7 @@ class ForecastCollectionViewCell: UICollectionViewCell {
         iconId = forecastItem.weather?.first?.icon
     }
     
+    // MARK: - Private methods
     private func getHourFromTimestamp(_ timestamp: Int, offset timezoneOffset: Int) -> String {
         let date = Date(timeIntervalSince1970: Double(timestamp))
         

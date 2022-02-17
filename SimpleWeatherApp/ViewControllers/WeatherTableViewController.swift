@@ -144,13 +144,16 @@ extension WeatherTableViewController {
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        if indexPath.section == 0
-        {
-            return UITableView.automaticDimension
+        guard let weatherSection = WeatherSection(rawValue: indexPath.section) else {
+            fatalError("Unknown weather section type")
         }
-        return 140
         
-//        return UITableView.automaticDimension
+        switch weatherSection {
+        case .main:
+            return UITableView.automaticDimension
+        case .forecast:
+            return ForecastTableViewCell.requiredHeight
+        }
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

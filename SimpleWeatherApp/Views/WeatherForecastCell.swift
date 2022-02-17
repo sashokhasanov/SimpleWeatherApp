@@ -9,16 +9,19 @@ import UIKit
 
 class WeatherForecastCell: UICollectionViewCell {
 
+    // MARK: - IBOutlets
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var weatherIcon: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     
+    // MARK: - Private properties
     private var iconId: String? {
         didSet {
             updateWeaterIcon()
         }
     }
     
+    // MARK: - Internal methods
     func configure(with forecastItem: Current, timeZoneOffset: Int) {
         timeLabel.text =
             getHourFromTimestamp(forecastItem.dt ?? 0, offset: timeZoneOffset)
@@ -26,9 +29,9 @@ class WeatherForecastCell: UICollectionViewCell {
         temperatureLabel.text = String(format: "%0.f°C", forecastItem.temp ?? 0)
         
         iconId = forecastItem.weather?.first?.icon
-//        updateWeaterIcon()
     }
     
+    // MARK: - Private methods
     private func getHourFromTimestamp(_ timestamp: Int, offset timezoneOffset: Int) -> String {
         let date = Date(timeIntervalSince1970: Double(timestamp))
         

@@ -9,14 +9,25 @@ import UIKit
 
 class ForecastTableViewCell: UITableViewCell {
     
+    // MARK: - IBOutlets
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    // MARK: - Internal properties
     static let reuseId = "ForecastTableViewCell"
     
-    private let numberOfItems = 12
+    static var requiredHeight: CGFloat {
+        forecastCellSize.height + contentInsets.top + contentInsets.bottom
+    }
+    
+    // MARK: - Private properties
+    private static let forecastCellSize = CGSize(width: 70, height: 120)
+    private static let contentInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    private static let numberOfItems = 12
+    
     private var forecast: [Current]?
     private var timezoneOffest: Int?
     
-    @IBOutlet weak var collectionView: UICollectionView!
-    
+    // MARK: - Override methods
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -37,14 +48,15 @@ class ForecastTableViewCell: UITableViewCell {
     }
 }
 
+// MARK: - Collection view data source
 extension ForecastTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        min(numberOfItems, forecast?.count ?? 0)
-//        12
+        min(ForecastTableViewCell.numberOfItems, forecast?.count ?? 0)
     }
 }
 
+// MARK: - Collection view delegate
 extension ForecastTableViewCell: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -58,15 +70,16 @@ extension ForecastTableViewCell: UICollectionViewDelegate {
     }
 }
 
+// MARK: - Collection view delegate flow layout
 extension ForecastTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 70, height: 120)
+        ForecastTableViewCell.forecastCellSize
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        ForecastTableViewCell.contentInsets
     }
 }
