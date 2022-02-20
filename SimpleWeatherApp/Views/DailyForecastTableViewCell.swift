@@ -45,6 +45,7 @@ class DailyForecastTableViewCell: UITableViewCell {
         let date = Date(timeIntervalSince1970: Double(timestamp))
         
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ru_RU")
         formatter.dateFormat = "E dd.MM.yy"
         formatter.timeZone = TimeZone(secondsFromGMT: timezoneOffset)
         

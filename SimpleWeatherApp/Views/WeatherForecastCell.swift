@@ -36,6 +36,7 @@ class WeatherForecastCell: UICollectionViewCell {
         let date = Date(timeIntervalSince1970: Double(timestamp))
         
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ru_RU")
         formatter.dateFormat = "HH"
         formatter.timeZone = TimeZone(secondsFromGMT: timezoneOffset)
         
