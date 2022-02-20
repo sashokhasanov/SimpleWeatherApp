@@ -21,9 +21,16 @@ class WeatherTableViewController: UITableViewController {
 
         tableView.register(MainInfoTableViewCell.nib(), forCellReuseIdentifier: MainInfoTableViewCell.reuseId)
         tableView.register(ForecastTableViewCell.nib(), forCellReuseIdentifier: ForecastTableViewCell.reuseId)
+        tableView.register(DailyForecastTableViewCell.nib(), forCellReuseIdentifier: DailyForecastTableViewCell.reuseId)
         
         setupRefreshControl()
         setupLocation()
+        
+        tableView.layer.masksToBounds = false
+        tableView.layer.shadowColor = UIColor.black.cgColor // any value you want
+        tableView.layer.shadowOpacity = 1 // any value you want
+        tableView.layer.shadowRadius = 10 // any value you want
+        tableView.layer.shadowOffset = .init(width: 0, height: 10) // any value you want
     }
     
     // MARK: - Private methods
@@ -93,6 +100,7 @@ class WeatherTableViewController: UITableViewController {
     private enum WeatherSection: Int, CaseIterable {
         case main = 0
         case forecast = 1
+        case dailyForecast = 2
         
         var title: String {
             switch self {
@@ -100,6 +108,8 @@ class WeatherTableViewController: UITableViewController {
                 return ""
             case .forecast:
                 return "Почасовой прогноз"
+            case .dailyForecast:
+                return "Прогноз на 7 дней"
             }
         }
         
@@ -109,6 +119,19 @@ class WeatherTableViewController: UITableViewController {
                 return MainInfoTableViewCell.reuseId
             case .forecast:
                 return ForecastTableViewCell.reuseId
+            case .dailyForecast:
+                return DailyForecastTableViewCell.reuseId
+            }
+        }
+        
+        var rowsRequired: Int {
+            switch self {
+            case .main:
+                return 1
+            case .forecast:
+                return 1
+            case .dailyForecast:
+                return 7
             }
         }
     }
@@ -122,7 +145,12 @@ extension WeatherTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        
+        guard let weatherSection = WeatherSection(rawValue: section) else {
+            fatalError("Unknown weather section type")
+        }
+        
+        return weatherSection.rowsRequired
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -137,6 +165,8 @@ extension WeatherTableViewController {
             mainInfoCell.configure(with: weatherInfo?.current)
         } else if let forecastCell = cell as? ForecastTableViewCell {
             forecastCell.configure(with: weatherInfo?.hourly, timezoneOffset: weatherInfo?.timezoneOffset)
+        } else if let dailyForecastCell = cell as? DailyForecastTableViewCell {
+            dailyForecastCell.configure(with: weatherInfo?.daily?[indexPath.row], timeZoneOffset: weatherInfo?.timezoneOffset ?? 0)
         }
 
         return cell
@@ -149,10 +179,10 @@ extension WeatherTableViewController {
         }
         
         switch weatherSection {
-        case .main:
-            return UITableView.automaticDimension
         case .forecast:
             return ForecastTableViewCell.requiredHeight
+        default:
+            return UITableView.automaticDimension
         }
     }
     
@@ -161,8 +191,12 @@ extension WeatherTableViewController {
         guard let sectionType = WeatherSection(rawValue: section) else {
             return nil
         }
-        
+
         return sectionType.title
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        50
     }
 }
 

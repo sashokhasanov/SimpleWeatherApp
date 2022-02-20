@@ -13,6 +13,8 @@
 		2D51F131279EF51C00963858 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D51F130279EF51C00963858 /* WeatherService.swift */; };
 		2D8B26AD27BE399E001DE673 /* ForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B26AB27BE399E001DE673 /* ForecastTableViewCell.swift */; };
 		2D8B26AE27BE399E001DE673 /* ForecastTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D8B26AC27BE399E001DE673 /* ForecastTableViewCell.xib */; };
+		2D8B26CB27C2A2B0001DE673 /* DailyForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B26C927C2A2AF001DE673 /* DailyForecastTableViewCell.swift */; };
+		2D8B26CC27C2A2B0001DE673 /* DailyForecastTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D8B26CA27C2A2B0001DE673 /* DailyForecastTableViewCell.xib */; };
 		2DB62A022791E6AD00B909B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB62A012791E6AD00B909B5 /* AppDelegate.swift */; };
 		2DB62A042791E6AD00B909B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB62A032791E6AD00B909B5 /* SceneDelegate.swift */; };
 		2DB62A062791E6AD00B909B5 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB62A052791E6AD00B909B5 /* WeatherViewController.swift */; };
@@ -36,6 +38,8 @@
 		2D51F130279EF51C00963858 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		2D8B26AB27BE399E001DE673 /* ForecastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ForecastTableViewCell.swift; path = SimpleWeatherApp/Views/ForecastTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		2D8B26AC27BE399E001DE673 /* ForecastTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ForecastTableViewCell.xib; path = SimpleWeatherApp/Views/ForecastTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		2D8B26C927C2A2AF001DE673 /* DailyForecastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyForecastTableViewCell.swift; sourceTree = "<group>"; };
+		2D8B26CA27C2A2B0001DE673 /* DailyForecastTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DailyForecastTableViewCell.xib; sourceTree = "<group>"; };
 		2DB629FE2791E6AD00B909B5 /* SimpleWeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleWeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DB62A012791E6AD00B909B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2DB62A032791E6AD00B909B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +80,8 @@
 				2DBFEB6427BCFAD1002DD44B /* MainInfoTableViewCell.xib */,
 				2DBFEB9727BD491B002DD44B /* ForecastCollectionViewCell.swift */,
 				2DBFEB9827BD491B002DD44B /* ForecastCollectionViewCell.xib */,
+				2D8B26C927C2A2AF001DE673 /* DailyForecastTableViewCell.swift */,
+				2D8B26CA27C2A2B0001DE673 /* DailyForecastTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -226,6 +232,7 @@
 				2DBFEB9A27BD491B002DD44B /* ForecastCollectionViewCell.xib in Resources */,
 				2D8B26AE27BE399E001DE673 /* ForecastTableViewCell.xib in Resources */,
 				2DB62A0E2791E6B400B909B5 /* LaunchScreen.storyboard in Resources */,
+				2D8B26CC27C2A2B0001DE673 /* DailyForecastTableViewCell.xib in Resources */,
 				2DB62A0B2791E6B400B909B5 /* Assets.xcassets in Resources */,
 				2DBFEB6627BCFAD2002DD44B /* MainInfoTableViewCell.xib in Resources */,
 				2DB62A092791E6AD00B909B5 /* Main.storyboard in Resources */,
@@ -250,6 +257,7 @@
 				2DBFEB6527BCFAD2002DD44B /* MainInfoTableViewCell.swift in Sources */,
 				2DB62A1A2791F62000B909B5 /* NetworkManager.swift in Sources */,
 				2DB62A022791E6AD00B909B5 /* AppDelegate.swift in Sources */,
+				2D8B26CB27C2A2B0001DE673 /* DailyForecastTableViewCell.swift in Sources */,
 				2D51F129279DBEEA00963858 /* ImageService.swift in Sources */,
 				2DB62A042791E6AD00B909B5 /* SceneDelegate.swift in Sources */,
 				2D51F12F279DEA7700963858 /* LocationService.swift in Sources */,

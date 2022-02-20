@@ -175,12 +175,10 @@
         <!--Weather Table View Controller-->
         <scene sceneID="W7o-Xe-8Rx">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CXS-bD-7Zq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tableViewController id="InK-0p-8EH" customClass="WeatherTableViewController" customModule="SimpleWeatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="h8h-u6-tac">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <connections>
                             <outlet property="dataSource" destination="InK-0p-8EH" id="79X-86-vcv"/>
                             <outlet property="delegate" destination="InK-0p-8EH" id="yaV-V0-soE"/>
@@ -188,13 +186,13 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="6Fl-Ok-ZgI"/>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CXS-bD-7Zq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1123.125" y="857.74647887323943"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Zbp-aT-Ncu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5T8-T3-giZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="StV-Yt-ygT" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="2PR-VG-6ef">
@@ -206,6 +204,7 @@
                         <segue destination="InK-0p-8EH" kind="relationship" relationship="rootViewController" id="uNI-9d-Zfu"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5T8-T3-giZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="125.625" y="857.74647887323943"/>
         </scene>
