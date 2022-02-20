@@ -25,12 +25,6 @@ class WeatherTableViewController: UITableViewController {
         
         setupRefreshControl()
         setupLocation()
-        
-        tableView.layer.masksToBounds = false
-        tableView.layer.shadowColor = UIColor.black.cgColor // any value you want
-        tableView.layer.shadowOpacity = 1 // any value you want
-        tableView.layer.shadowRadius = 10 // any value you want
-        tableView.layer.shadowOffset = .init(width: 0, height: 10) // any value you want
     }
     
     // MARK: - Private methods
