@@ -16,13 +16,16 @@ struct WeatherInfo: Decodable {
     let timezoneOffset: Int?
     let current: Current?
     let hourly: [Current]?
+    let daily: [Daily]?
 
     enum CodingKeys: String, CodingKey {
         case longtitude = "lon"
         case latitude = "lat"
         case timezone
         case timezoneOffset = "timezone_offset"
-        case current, hourly
+        case current
+        case hourly
+        case daily
     }
 }
 
@@ -33,7 +36,8 @@ struct Current: Decodable {
     let feelsLike: Double?
     let pressure: Int?
     let humidity: Int?
-    let clouds, visibility: Int?
+    let clouds: Int?
+    let visibility: Int?
     let windSpeed: Double?
     let windDeg: Int?
     let windGust: Double?
@@ -51,6 +55,59 @@ struct Current: Decodable {
     }
 }
 
+// MARK: - Current
+struct Daily: Decodable {
+    let dt: Int?
+    let sunrise: Int?
+    let sunset: Int?
+    let moonrise: Int?
+    let moonset: Int?
+    let moonPhase: Double?
+    let temp: DailyTemp?
+    let feelsLike: DailyFeelsLike?
+    let pressure: Int?
+    let humidity: Int?
+    let windSpeed: Double?
+    let windDeg: Int?
+    let weather: [Weather]?
+    let clouds: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case dt
+        case sunrise
+        case sunset
+        case moonrise
+        case moonset
+        case moonPhase = "moon_phase"
+        case temp
+        case feelsLike = "feels_like"
+        case pressure
+        case humidity
+        case windSpeed = "wind_speed"
+        case windDeg = "wind_deg"
+        case weather
+        case clouds
+    }
+}
+
+// MARK: - DailyFeelsLike
+struct DailyFeelsLike: Decodable {
+    let day: Double?
+    let night: Double?
+    let eve: Double?
+    let morn: Double?
+}
+
+// MARK: - DailyTemp
+struct DailyTemp: Decodable {
+    let day: Double?
+    let min: Double?
+    let max: Double?
+    let night: Double?
+    let eve: Double?
+    let morn: Double?
+}
+
 // MARK: - Weather
 struct Weather: Decodable {
     let id: Int?
@@ -59,7 +116,8 @@ struct Weather: Decodable {
     let icon: String?
 
     enum CodingKeys: String, CodingKey {
-        case id, main
+        case id
+        case main
         case weatherDescription = "description"
         case icon
     }

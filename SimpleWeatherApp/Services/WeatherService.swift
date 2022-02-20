@@ -49,7 +49,7 @@ class WeatherService {
             URLQueryItem(name: "lon", value: String(longtitude)),
             URLQueryItem(name: "units", value: "metric"),
             URLQueryItem(name: "lang", value: "ru"),
-            URLQueryItem(name: "exclude", value: "daily,minutely,alert"),
+            URLQueryItem(name: "exclude", value: "minutely,alert"),
             URLQueryItem(name: "appid", value: apiKey)
         ]
         
