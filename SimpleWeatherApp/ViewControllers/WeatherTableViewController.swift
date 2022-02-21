@@ -227,7 +227,7 @@ extension WeatherTableViewController: CLLocationManagerDelegate {
             return
         }
         
-        if location.distance(from: lastLocation) > kCLLocationAccuracyKilometer {
+        if location.distance(from: lastLocation) > 1000 {
             self.lastLocation = location
         }
     }
