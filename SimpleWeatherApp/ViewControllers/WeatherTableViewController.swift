@@ -12,8 +12,17 @@ class WeatherTableViewController: UITableViewController {
 
     // MARK: - Private properties
     private let locationManager = CLLocationManager()
-    private var lastLocation: CLLocation?
     private var weatherInfo: WeatherInfo?
+    
+    private var lastLocation: CLLocation? {
+        didSet {
+            beginRefreshing()
+            updateCurrentCity()
+            updateWeather()
+        }
+    }
+    
+    let locationUpdateTimeInterval: TimeInterval = 600
 
     // MARK: - Override methods
     override func viewDidLoad() {
@@ -30,7 +39,7 @@ class WeatherTableViewController: UITableViewController {
     // MARK: - Private methods
     private func setupRefreshControl() {
         refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(updateWeather), for: .valueChanged)
+        refreshControl?.addTarget(self, action: #selector(updateWeatherInteractive), for: .valueChanged)
     }
     
     private func setupLocation() {
@@ -39,7 +48,7 @@ class WeatherTableViewController: UITableViewController {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-            locationManager.startUpdatingLocation()
+            locationManager.requestLocation()
         }
     }
     
@@ -60,7 +69,17 @@ class WeatherTableViewController: UITableViewController {
         }
     }
     
-    @objc private func updateWeather() {
+    @objc private func updateWeatherInteractive() {
+        
+        guard let location = lastLocation, location.timestamp.distance(to: Date()) > locationUpdateTimeInterval else {
+            locationManager.requestLocation()
+            return
+        }
+        
+        updateWeather()
+    }
+    
+    private func updateWeather() {
         guard let location = lastLocation else { return }
         
         WeatherService.shared.getWeatherData(latitude: location.coordinate.latitude,
@@ -82,6 +101,7 @@ class WeatherTableViewController: UITableViewController {
 
     private func beginRefreshing() {
         guard let refreshControl = refreshControl else { return }
+        guard !refreshControl.isRefreshing else { return }
         
         let verticalOffset = tableView.contentOffset.y - refreshControl.frame.size.height
         
@@ -202,21 +222,14 @@ extension WeatherTableViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         
-        if needUpdateWeather(with: location) {
-            lastLocation = location
-            
-            beginRefreshing()
-            updateCurrentCity()
-            updateWeather()
-        }
+        lastLocation = location
     }
     
-    func needUpdateWeather(with location: CLLocation) -> Bool {
-        guard let lastLocation = lastLocation else { return true }
-        
-        let distanceSignificantlyChanged = location.distance(from: lastLocation) > 1000
-        let significantTimePassed = lastLocation.timestamp.distance(to: location.timestamp) > 60
-        
-        return distanceSignificantlyChanged || significantTimePassed
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        manager.requestLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to find user's location: \(error.localizedDescription)")
     }
 }
