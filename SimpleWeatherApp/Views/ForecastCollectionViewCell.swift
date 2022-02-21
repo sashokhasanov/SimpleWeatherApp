@@ -43,7 +43,7 @@ class ForecastCollectionViewCell: UICollectionViewCell {
         let date = Date(timeIntervalSince1970: Double(timestamp))
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH"
+        formatter.dateFormat = "HH:mm"
         formatter.timeZone = TimeZone(secondsFromGMT: timezoneOffset)
         
         return formatter.string(from: date)

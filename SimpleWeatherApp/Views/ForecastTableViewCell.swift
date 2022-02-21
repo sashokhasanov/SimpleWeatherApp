@@ -42,8 +42,9 @@ class ForecastTableViewCell: UITableViewCell {
         UINib(nibName: reuseId, bundle: nil)
     }
     
-    func configure(with forecastData: [Current]?, timezoneOffset: Int?) {
-        forecast = forecastData
+    func configure(with forecast: [Current]?, timezoneOffset: Int?) {
+        self.forecast = forecast
+        self.timezoneOffest = timezoneOffset
         collectionView.reloadData()
     }
 }
