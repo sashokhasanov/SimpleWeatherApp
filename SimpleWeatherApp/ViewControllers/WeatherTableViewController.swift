@@ -222,14 +222,7 @@ extension WeatherTableViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         
-        guard let lastLocation = self.lastLocation else {
-            self.lastLocation = location
-            return
-        }
-        
-        if location.distance(from: lastLocation) > 1000 {
-            self.lastLocation = location
-        }
+        lastLocation = location
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
