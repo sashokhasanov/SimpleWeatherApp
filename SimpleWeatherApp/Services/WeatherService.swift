@@ -34,10 +34,6 @@ class WeatherService {
         guard let weatherUrl = makeWeatherRequestUrl(latitude, longtitude) else { return }
         
         NetworkManager.shared.fetchData(from: weatherUrl) { result in
-            
-            // TODO remove before release
-            sleep(5)
-            
             switch result {
             case .success(let data):
                 do {
