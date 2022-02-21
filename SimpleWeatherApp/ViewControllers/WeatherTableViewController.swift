@@ -47,7 +47,7 @@ class WeatherTableViewController: UITableViewController {
 
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+            locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
             locationManager.requestLocation()
         }
     }
@@ -222,7 +222,14 @@ extension WeatherTableViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         
-        lastLocation = location
+        guard let lastLocation = self.lastLocation else {
+            self.lastLocation = location
+            return
+        }
+        
+        if location.distance(from: lastLocation) > kCLLocationAccuracyKilometer {
+            self.lastLocation = location
+        }
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {

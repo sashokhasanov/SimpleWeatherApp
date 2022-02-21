@@ -23,7 +23,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="YHg-bl-WEa">
                                 <rect key="frame" x="54.5" y="0.0" width="230" height="100"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WeatherPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="dX2-L5-VH8">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dX2-L5-VH8">
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                         <color key="tintColor" systemColor="systemGray6Color"/>
                                         <constraints>
@@ -72,7 +72,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="WeatherPlaceholder" width="50" height="50"/>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
