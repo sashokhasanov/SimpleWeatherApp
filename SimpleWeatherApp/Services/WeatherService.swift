@@ -22,7 +22,7 @@ class WeatherService {
         }
         
         if (value.starts(with: "_")) {
-            fatalError("Register as a developer at OpenWeatherMap: https://openweathermap.org/api/one-call-api")
+            fatalError("Provide one call api key from https://openweathermap.org/api/one-call-api")
         }
         
         return value
