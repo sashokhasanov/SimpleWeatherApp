@@ -10,7 +10,23 @@ import Foundation
 class WeatherService {
     static let shared = WeatherService()
     
-    private let apiKey = "e44c551160dc50f8423bc7d7db2805a5"
+    private lazy var apiKey: String = {
+        
+        guard let filePath = Bundle.main.path(forResource: "OpenWeatherMap-Info", ofType: "plist") else {
+            fatalError("Couldn't find file 'OpenWeatherMap-Info.plist'.")
+        }
+        
+        let plist = NSDictionary(contentsOfFile: filePath)
+        guard let value = plist?.object(forKey: "API_KEY") as? String else {
+            fatalError("Couldn't find key 'API_KEY' in 'OpenWeatherMap-Info.plist'.")
+        }
+        
+        if (value.starts(with: "_")) {
+            fatalError("Register as a developer at OpenWeatherMap: https://openweathermap.org/api/one-call-api")
+        }
+        
+        return value
+    }()
     
     private init() {}
     
