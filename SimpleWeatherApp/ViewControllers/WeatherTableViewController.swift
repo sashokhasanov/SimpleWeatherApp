@@ -65,8 +65,6 @@ class WeatherTableViewController: UITableViewController {
         
         WeatherService.shared.getWeatherData(latitude: location.coordinate.latitude,
                                              longtitude: location.coordinate.longitude) { result in
-            self.endRefreshing()
-            
             switch result {
             case .failure(let error):
                 // TODO log error
@@ -74,6 +72,10 @@ class WeatherTableViewController: UITableViewController {
             case .success(let weatherInfo):
                 self.weatherInfo = weatherInfo
                 self.tableView.reloadData()
+            }
+            
+            DispatchQueue.main.async {
+                self.endRefreshing()
             }
         }
     }
