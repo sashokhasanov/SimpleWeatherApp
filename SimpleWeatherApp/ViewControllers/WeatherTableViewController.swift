@@ -71,7 +71,7 @@ class WeatherTableViewController: UITableViewController {
     
     @objc private func updateWeatherInteractive() {
         
-        guard let location = lastLocation, location.timestamp.distance(to: Date()) > locationUpdateTimeInterval else {
+        guard let location = lastLocation, location.timestamp.distance(to: Date()) < locationUpdateTimeInterval else {
             locationManager.requestLocation()
             return
         }
