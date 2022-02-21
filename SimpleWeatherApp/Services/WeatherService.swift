@@ -38,10 +38,7 @@ class WeatherService {
             case .success(let data):
                 do {
                     let weatherInfo = try JSONDecoder().decode(WeatherInfo.self, from: data)
-                    
-                    DispatchQueue.main.async {
-                        completion(.success(weatherInfo))
-                    }
+                    completion(.success(weatherInfo))
                 } catch {
                     completion(.failure(.decodingError(error)))
                 }

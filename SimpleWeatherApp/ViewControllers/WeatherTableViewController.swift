@@ -93,8 +93,10 @@ class WeatherTableViewController: UITableViewController {
                 // TODO log error
                 print(error)
             case .success(let weatherInfo):
-                self.weatherInfo = weatherInfo
-                self.tableView.reloadData()
+                DispatchQueue.main.async {
+                    self.weatherInfo = weatherInfo
+                    self.tableView.reloadData()
+                }
             }
         }
     }
