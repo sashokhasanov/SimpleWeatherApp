@@ -23,12 +23,9 @@ class WeatherForecastCell: UICollectionViewCell {
     
     // MARK: - Internal methods
     func configure(with forecastItem: Current, timeZoneOffset: Int) {
-        timeLabel.text =
-            getHourFromTimestamp(forecastItem.dt ?? 0, offset: timeZoneOffset)
-
-        temperatureLabel.text = String(format: "%0.f°C", forecastItem.temp ?? 0)
-        
         iconId = forecastItem.weather?.first?.icon
+        temperatureLabel.text = String(format: "%0.f°C", forecastItem.temp ?? 0)
+        timeLabel.text = getHourFromTimestamp(forecastItem.dt ?? 0, offset: timeZoneOffset)
     }
     
     // MARK: - Private methods

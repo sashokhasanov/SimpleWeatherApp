@@ -29,13 +29,14 @@ class ForecastCollectionViewCell: UICollectionViewCell {
         UINib(nibName: reuseId, bundle: nil)
     }
     
-    func configure(with forecastItem: Current, timeZoneOffset: Int) {
-        timeLabel.text =
-            getHourFromTimestamp(forecastItem.dt ?? 0, offset: timeZoneOffset)
+    func configure(with forecastItem: Current?, timeZoneOffset: Int?) {
+        guard let forecastItem = forecastItem else { return }
 
-        temperatureLabel.text = String(format: "%0.f°C", forecastItem.temp ?? 0)
+        contentView.isHidden = false
         
         iconId = forecastItem.weather?.first?.icon
+        temperatureLabel.text = String(format: "%0.f°C", forecastItem.temp ?? 0)
+        timeLabel.text = getHourFromTimestamp(forecastItem.dt ?? 0, offset: timeZoneOffset ?? 0)
     }
     
     // MARK: - Private methods

@@ -32,13 +32,14 @@ class DailyForecastTableViewCell: UITableViewCell {
         UINib(nibName: reuseId, bundle: nil)
     }
     
-    func configure(with daily: Daily?, timeZoneOffset: Int) {
+    func configure(with daily: Daily?, timeZoneOffset: Int?) {
+        guard let daily = daily else { return }
         
-        dayLabel.text = getDayFromTimestamp(daily?.dt ?? 0, offset: timeZoneOffset)
+        contentView.isHidden = false
         
-        temperatureLabel.text = String(format: "%0.f°C", daily?.temp?.day ?? 0)
-        
-        iconId = daily?.weather?.first?.icon
+        iconId = daily.weather?.first?.icon
+        temperatureLabel.text = String(format: "%0.f°C", daily.temp?.day ?? 0)
+        dayLabel.text = getDayFromTimestamp(daily.dt ?? 0, offset: timeZoneOffset ?? 0)
     }
     
     private func getDayFromTimestamp(_ timestamp: Int, offset timezoneOffset: Int) -> String {

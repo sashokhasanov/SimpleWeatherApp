@@ -182,7 +182,7 @@ extension WeatherTableViewController {
         } else if let forecastCell = cell as? ForecastTableViewCell {
             forecastCell.configure(with: weatherInfo?.hourly, timezoneOffset: weatherInfo?.timezoneOffset)
         } else if let dailyForecastCell = cell as? DailyForecastTableViewCell {
-            dailyForecastCell.configure(with: weatherInfo?.daily?[indexPath.row], timeZoneOffset: weatherInfo?.timezoneOffset ?? 0)
+            dailyForecastCell.configure(with: weatherInfo?.daily?[indexPath.row], timeZoneOffset: weatherInfo?.timezoneOffset)
         }
 
         return cell

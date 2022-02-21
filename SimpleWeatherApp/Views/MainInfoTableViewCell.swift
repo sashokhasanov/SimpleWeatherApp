@@ -24,14 +24,15 @@ class MainInfoTableViewCell: UITableViewCell {
     }
     
     func configure(with currentWeather: Current?) {
+        guard let currentWeather = currentWeather else { return }
         
-        updateWeaterIcon(iconId: currentWeather?.weather?.first?.icon)
+        contentView.isHidden = false;
         
-        temperatureLabel.text = String(format: "%0.f°C", currentWeather?.temp ?? 0)
-        feelsLikeLabel.text = String(format: "Ощущается как %0.f°C", currentWeather?.feelsLike ?? 0)
-
-        let description = currentWeather?.weather?.first?.weatherDescription ?? ""
-        descriptionLabel.text = description.prefix(1).capitalized + description.dropFirst()
+        updateWeaterIcon(iconId: currentWeather.weather?.first?.icon)
+        
+        temperatureLabel.text = String(format: "%0.f°C", currentWeather.temp ?? 0)
+        feelsLikeLabel.text = String(format: "Ощущается как %0.f°C", currentWeather.feelsLike ?? 0)
+        descriptionLabel.text = configureDescription(currentWeather.weather?.first?.weatherDescription ?? "")
     }
     
     // MARK: - Private methods
@@ -52,4 +53,9 @@ class MainInfoTableViewCell: UITableViewCell {
         }
     }
     
+    private func configureDescription(_ description: String) -> String {
+        guard !description.isEmpty else { return description }
+        
+        return description.prefix(1).capitalized + description.dropFirst()
+    }
 }

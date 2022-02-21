@@ -63,8 +63,8 @@ extension ForecastTableViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ForecastCollectionViewCell.reuseId, for: indexPath)
         
-        if let forecastCell = cell as? ForecastCollectionViewCell, let current = forecast?[indexPath.item] {
-            forecastCell.configure(with: current, timeZoneOffset: timezoneOffest ?? 0)
+        if let forecastCell = cell as? ForecastCollectionViewCell {
+            forecastCell.configure(with: forecast?[indexPath.item], timeZoneOffset: timezoneOffest)
         }
         
         return cell
