@@ -23,9 +23,6 @@ class ImageService {
         guard let iconUrl = makeIconRequestUrl(for: iconId) else { return }
         
         NetworkManager.shared.fetchData(from: iconUrl) { result in
-            // TODO remove before release
-            sleep(2)
-            
             switch result {
             case .success(let data):
                 guard let icon = UIImage(data: data) else { return }
