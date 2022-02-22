@@ -193,6 +193,19 @@ extension WeatherTableViewController {
 
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+
+        guard let sectionType = WeatherSection(rawValue: section) else {
+            return nil
+        }
+
+        return sectionType.title
+    }
+}
+
+// MARK: - Table view delegate
+extension WeatherTableViewController {
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -206,15 +219,6 @@ extension WeatherTableViewController {
         default:
             return UITableView.automaticDimension
         }
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-
-        guard let sectionType = WeatherSection(rawValue: section) else {
-            return nil
-        }
-
-        return sectionType.title
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
