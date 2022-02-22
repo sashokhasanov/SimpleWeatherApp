@@ -13,7 +13,7 @@ class MainInfoTableViewCell: UITableViewCell {
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var feelsLikeLabel: UILabel!
-    @IBOutlet weak var iconView: UIImageView!
+    @IBOutlet weak var weatherIcon: UIImageView!
     
     // MARK: - Internal properties
     static let reuseId = "MainInfoTableViewCell"
@@ -38,7 +38,7 @@ class MainInfoTableViewCell: UITableViewCell {
     // MARK: - Private methods
     private func updateWeaterIcon(iconId: String?) {
         guard let iconId = iconId else {
-            iconView.image = UIImage(named: "WeatherPlaceholder")
+            weatherIcon.image = UIImage(named: "WeatherPlaceholder")
             return
         }
 
@@ -46,11 +46,13 @@ class MainInfoTableViewCell: UITableViewCell {
             switch result {
             case .success(let icon):
                 DispatchQueue.main.async {
-                    self.iconView.image = icon
+                    self.weatherIcon.image = icon
                 }
             case .failure(let error):
-                // TODO log error
                 print(error)
+                DispatchQueue.main.async {
+                    self.weatherIcon.image = UIImage(named: "WeatherPlaceholder")
+                }
             }
         }
     }

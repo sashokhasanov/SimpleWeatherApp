@@ -65,8 +65,10 @@ class HourlyForecastCollectionViewCell: UICollectionViewCell {
                     }
                 }
             case .failure(let error):
-                // TODO log error
                 print(error)
+                DispatchQueue.main.async {
+                    self.weatherIcon.image = UIImage(named: "WeatherPlaceholder")
+                }
             }
         }
     }

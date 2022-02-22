@@ -65,8 +65,8 @@
             <connections>
                 <outlet property="descriptionLabel" destination="fmP-2q-nZf" id="41T-QG-d5U"/>
                 <outlet property="feelsLikeLabel" destination="5dW-G5-MXM" id="1do-4j-grX"/>
-                <outlet property="iconView" destination="dX2-L5-VH8" id="rUU-eR-dM0"/>
                 <outlet property="temperatureLabel" destination="zCK-NT-twt" id="IP9-cn-hST"/>
+                <outlet property="weatherIcon" destination="dX2-L5-VH8" id="rUU-eR-dM0"/>
             </connections>
             <point key="canvasLocation" x="-7328.2608695652179" y="113.16964285714285"/>
         </tableViewCell>

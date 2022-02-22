@@ -63,7 +63,6 @@ class WeatherTableViewController: UITableViewController {
                     self.navigationItem.title = placemark.locality
                 }
             case .failure(let error):
-                // TODO log error
                 print(error)
             }
         }
@@ -90,7 +89,6 @@ class WeatherTableViewController: UITableViewController {
             
             switch result {
             case .failure(let error):
-                // TODO log error
                 print(error)
             case .success(let weatherInfo):
                 DispatchQueue.main.async {
