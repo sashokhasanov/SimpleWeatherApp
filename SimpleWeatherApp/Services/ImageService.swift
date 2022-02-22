@@ -27,10 +27,7 @@ class ImageService {
             case .success(let data):
                 guard let icon = UIImage(data: data) else { return }
                 self.imageCache.setObject(icon, forKey: iconId as NSString)
-                
-                DispatchQueue.main.async {
-                    completion(.success(icon))
-                }
+                completion(.success(icon))
             case .failure(let error):
                 completion(.failure(error))
             }

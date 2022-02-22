@@ -45,7 +45,9 @@ class MainInfoTableViewCell: UITableViewCell {
         ImageService.shared.getIcon(with: iconId) { result in
             switch result {
             case .success(let icon):
-                self.iconView.image = icon
+                DispatchQueue.main.async {
+                    self.iconView.image = icon
+                }
             case .failure(let error):
                 // TODO log error
                 print(error)

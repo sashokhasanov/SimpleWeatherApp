@@ -55,6 +55,7 @@ class DailyForecastTableViewCell: UITableViewCell {
     
     private func updateWeaterIcon() {
         guard let iconId = iconId else {
+            weatherIcon.image = UIImage(named: "WeatherPlaceholder")
             return
         }
         
@@ -62,7 +63,9 @@ class DailyForecastTableViewCell: UITableViewCell {
             switch result {
             case .success(let icon):
                 if iconId == self.iconId {
-                    self.weatherIcon.image = icon
+                    DispatchQueue.main.async {
+                        self.weatherIcon.image = icon
+                    }
                 }
             case .failure(let error):
                 // TODO log error

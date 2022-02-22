@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ForecastCollectionViewCell: UICollectionViewCell {
+class HourlyForecastCollectionViewCell: UICollectionViewCell {
     
     // MARK: - IBOutlets
     @IBOutlet weak var timeLabel: UILabel!
@@ -15,7 +15,7 @@ class ForecastCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var temperatureLabel: UILabel!
     
     // MARK: - Internal properties
-    static let reuseId = "ForecastCollectionViewCell"
+    static let reuseId = "HourlyForecastCollectionViewCell"
     
     // MARK: - Private properties
     private var iconId: String? {
@@ -52,6 +52,7 @@ class ForecastCollectionViewCell: UICollectionViewCell {
     
     private func updateWeaterIcon() {
         guard let iconId = iconId else {
+            weatherIcon.image = UIImage(named: "WeatherPlaceholder")
             return
         }
         
@@ -59,7 +60,9 @@ class ForecastCollectionViewCell: UICollectionViewCell {
             switch result {
             case .success(let icon):
                 if iconId == self.iconId {
-                    self.weatherIcon.image = icon
+                    DispatchQueue.main.async {
+                        self.weatherIcon.image = icon
+                    }
                 }
             case .failure(let error):
                 // TODO log error

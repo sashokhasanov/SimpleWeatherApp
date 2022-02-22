@@ -7,13 +7,13 @@
 
 import UIKit
 
-class ForecastTableViewCell: UITableViewCell {
+class HourlyForecastTableViewCell: UITableViewCell {
     
     // MARK: - IBOutlets
     @IBOutlet weak var collectionView: UICollectionView!
     
     // MARK: - Internal properties
-    static let reuseId = "ForecastTableViewCell"
+    static let reuseId = "HourlyForecastTableViewCell"
     
     static var requiredHeight: CGFloat {
         forecastCellSize.height + contentInsets.top + contentInsets.bottom
@@ -31,8 +31,8 @@ class ForecastTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        collectionView.register(ForecastCollectionViewCell.nib(),
-                                forCellWithReuseIdentifier: ForecastCollectionViewCell.reuseId)
+        collectionView.register(HourlyForecastCollectionViewCell.nib(),
+                                forCellWithReuseIdentifier: HourlyForecastCollectionViewCell.reuseId)
 
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -50,20 +50,20 @@ class ForecastTableViewCell: UITableViewCell {
 }
 
 // MARK: - Collection view data source
-extension ForecastTableViewCell: UICollectionViewDataSource {
+extension HourlyForecastTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        min(ForecastTableViewCell.numberOfItems, forecast?.count ?? 0)
+        min(HourlyForecastTableViewCell.numberOfItems, forecast?.count ?? 0)
     }
 }
 
 // MARK: - Collection view delegate
-extension ForecastTableViewCell: UICollectionViewDelegate {
+extension HourlyForecastTableViewCell: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ForecastCollectionViewCell.reuseId, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyForecastCollectionViewCell.reuseId, for: indexPath)
         
-        if let forecastCell = cell as? ForecastCollectionViewCell {
+        if let forecastCell = cell as? HourlyForecastCollectionViewCell {
             forecastCell.configure(with: forecast?[indexPath.item], timeZoneOffset: timezoneOffest)
         }
         
@@ -72,15 +72,15 @@ extension ForecastTableViewCell: UICollectionViewDelegate {
 }
 
 // MARK: - Collection view delegate flow layout
-extension ForecastTableViewCell: UICollectionViewDelegateFlowLayout {
+extension HourlyForecastTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        ForecastTableViewCell.forecastCellSize
+        HourlyForecastTableViewCell.forecastCellSize
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        ForecastTableViewCell.contentInsets
+        HourlyForecastTableViewCell.contentInsets
     }
 }

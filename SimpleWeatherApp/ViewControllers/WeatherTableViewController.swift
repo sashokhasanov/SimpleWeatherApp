@@ -29,7 +29,7 @@ class WeatherTableViewController: UITableViewController {
         super.viewDidLoad()
 
         tableView.register(MainInfoTableViewCell.nib(), forCellReuseIdentifier: MainInfoTableViewCell.reuseId)
-        tableView.register(ForecastTableViewCell.nib(), forCellReuseIdentifier: ForecastTableViewCell.reuseId)
+        tableView.register(HourlyForecastTableViewCell.nib(), forCellReuseIdentifier: HourlyForecastTableViewCell.reuseId)
         tableView.register(DailyForecastTableViewCell.nib(), forCellReuseIdentifier: DailyForecastTableViewCell.reuseId)
         
         setupRefreshControl()
@@ -117,14 +117,14 @@ class WeatherTableViewController: UITableViewController {
     
     private enum WeatherSection: Int, CaseIterable {
         case main = 0
-        case forecast = 1
+        case hourlyForecast = 1
         case dailyForecast = 2
         
         var title: String {
             switch self {
             case .main:
                 return ""
-            case .forecast:
+            case .hourlyForecast:
                 return "Почасовой прогноз"
             case .dailyForecast:
                 return "Прогноз на 7 дней"
@@ -135,8 +135,8 @@ class WeatherTableViewController: UITableViewController {
             switch self {
             case .main:
                 return MainInfoTableViewCell.reuseId
-            case .forecast:
-                return ForecastTableViewCell.reuseId
+            case .hourlyForecast:
+                return HourlyForecastTableViewCell.reuseId
             case .dailyForecast:
                 return DailyForecastTableViewCell.reuseId
             }
@@ -146,7 +146,7 @@ class WeatherTableViewController: UITableViewController {
             switch self {
             case .main:
                 return 1
-            case .forecast:
+            case .hourlyForecast:
                 return 1
             case .dailyForecast:
                 return 7
@@ -181,7 +181,7 @@ extension WeatherTableViewController {
         
         if let mainInfoCell = cell as? MainInfoTableViewCell {
             mainInfoCell.configure(with: weatherInfo?.current)
-        } else if let forecastCell = cell as? ForecastTableViewCell {
+        } else if let forecastCell = cell as? HourlyForecastTableViewCell {
             forecastCell.configure(with: weatherInfo?.hourly, timezoneOffset: weatherInfo?.timezoneOffset)
         } else if let dailyForecastCell = cell as? DailyForecastTableViewCell {
             dailyForecastCell.configure(with: weatherInfo?.daily?[indexPath.row], timeZoneOffset: weatherInfo?.timezoneOffset)
@@ -197,8 +197,8 @@ extension WeatherTableViewController {
         }
         
         switch weatherSection {
-        case .forecast:
-            return ForecastTableViewCell.requiredHeight
+        case .hourlyForecast:
+            return HourlyForecastTableViewCell.requiredHeight
         default:
             return UITableView.automaticDimension
         }
