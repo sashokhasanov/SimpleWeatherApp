@@ -114,7 +114,11 @@ class WeatherTableViewController: UITableViewController {
     private func endRefreshing() {
         refreshControl?.endRefreshing()
     }
-    
+}
+
+// MARK: - Private enum that defines table sections
+extension WeatherTableViewController {
+
     private enum WeatherSection: Int, CaseIterable {
         case main = 0
         case hourlyForecast = 1
