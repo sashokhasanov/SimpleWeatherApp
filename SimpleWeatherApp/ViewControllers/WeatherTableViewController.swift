@@ -16,7 +16,6 @@ class WeatherTableViewController: UITableViewController {
     
     private var lastLocation: CLLocation? {
         didSet {
-            beginRefreshing()
             updateCurrentCity()
             updateWeather()
         }
@@ -84,7 +83,7 @@ class WeatherTableViewController: UITableViewController {
         WeatherService.shared.getWeatherData(latitude: location.coordinate.latitude,
                                              longtitude: location.coordinate.longitude) { result in
             DispatchQueue.main.async {
-                self.endRefreshing()
+                self.refreshControl?.endRefreshing()
             }
             
             switch result {
@@ -97,20 +96,6 @@ class WeatherTableViewController: UITableViewController {
                 }
             }
         }
-    }
-
-    private func beginRefreshing() {
-        guard let refreshControl = refreshControl else { return }
-        guard !refreshControl.isRefreshing else { return }
-        
-        let verticalOffset = tableView.contentOffset.y - refreshControl.frame.size.height
-        
-        refreshControl.beginRefreshing()
-        tableView.setContentOffset(CGPoint(x: 0, y: verticalOffset), animated: true)
-    }
-    
-    private func endRefreshing() {
-        refreshControl?.endRefreshing()
     }
 }
 
@@ -229,7 +214,7 @@ extension WeatherTableViewController: CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        
+
         lastLocation = location
     }
     

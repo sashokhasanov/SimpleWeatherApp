@@ -45,6 +45,13 @@ class HourlyForecastTableViewCell: UITableViewCell {
     func configure(with forecast: [Current]?, timezoneOffset: Int?) {
         self.forecast = forecast
         self.timezoneOffest = timezoneOffset
+        
+        contentView.isHidden = false;
+        contentView.alpha = 0
+        UIView.animate(withDuration: 0.8) {
+            self.contentView.alpha = 1
+        }
+        
         collectionView.reloadData()
     }
 }

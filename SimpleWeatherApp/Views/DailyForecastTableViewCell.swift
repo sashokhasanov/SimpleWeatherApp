@@ -34,7 +34,11 @@ class DailyForecastTableViewCell: UITableViewCell {
     func configure(with daily: Daily?, timeZoneOffset: Int?) {
         guard let daily = daily else { return }
         
-        contentView.isHidden = false
+        contentView.isHidden = false;
+        contentView.alpha = 0
+        UIView.animate(withDuration: 0.8) {
+            self.contentView.alpha = 1
+        }
         
         iconId = daily.weather?.first?.icon
         temperatureLabel.text = String(format: "%0.f°C", daily.temp?.day ?? 0)

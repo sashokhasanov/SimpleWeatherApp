@@ -32,7 +32,11 @@ class HourlyForecastCollectionViewCell: UICollectionViewCell {
     func configure(with forecastItem: Current?, timeZoneOffset: Int?) {
         guard let forecastItem = forecastItem else { return }
 
-        contentView.isHidden = false
+        contentView.isHidden = false;
+        contentView.alpha = 0
+        UIView.animate(withDuration: 0.8) {
+            self.contentView.alpha = 1
+        }
         
         iconId = forecastItem.weather?.first?.icon
         temperatureLabel.text = String(format: "%0.f°C", forecastItem.temp ?? 0)

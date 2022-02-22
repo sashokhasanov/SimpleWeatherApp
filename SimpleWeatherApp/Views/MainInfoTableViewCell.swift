@@ -27,6 +27,10 @@ class MainInfoTableViewCell: UITableViewCell {
         guard let currentWeather = currentWeather else { return }
         
         contentView.isHidden = false;
+        contentView.alpha = 0
+        UIView.animate(withDuration: 0.8) {
+            self.contentView.alpha = 1
+        }
         
         updateWeaterIcon(iconId: currentWeather.weather?.first?.icon)
         
