@@ -22,7 +22,6 @@ class DailyForecastTableViewCell: UITableViewCell {
     // MARK: - Internal properties
     static let reuseId = "DailyForecastTableViewCell"
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
