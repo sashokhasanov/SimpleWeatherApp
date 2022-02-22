@@ -20,8 +20,6 @@ class WeatherTableViewController: UITableViewController {
             updateWeather()
         }
     }
-    
-    let locationUpdateTimeInterval: TimeInterval = 600
 
     // MARK: - Override methods
     override func viewDidLoad() {
@@ -34,11 +32,11 @@ class WeatherTableViewController: UITableViewController {
         setupRefreshControl()
         setupLocation()
     }
-    
+
     // MARK: - Private methods
     private func setupRefreshControl() {
         refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(updateWeatherInteractive), for: .valueChanged)
+        refreshControl?.addTarget(self, action: #selector(updateWeather), for: .valueChanged)
     }
     
     private func setupLocation() {
@@ -66,18 +64,8 @@ class WeatherTableViewController: UITableViewController {
             }
         }
     }
-    
-    @objc private func updateWeatherInteractive() {
-        
-        guard let location = lastLocation, location.timestamp.distance(to: Date()) < locationUpdateTimeInterval else {
-            locationManager.requestLocation()
-            return
-        }
-        
-        updateWeather()
-    }
-    
-    private func updateWeather() {
+
+    @objc private func updateWeather() {
         guard let location = lastLocation else { return }
         
         WeatherService.shared.getWeatherData(latitude: location.coordinate.latitude,
@@ -215,7 +203,11 @@ extension WeatherTableViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
 
-        lastLocation = location
+        // need this check because CLLocationManager.requestLocation()
+        // may cause multiple updates instead of one
+        if lastLocation == nil {
+            lastLocation = location
+        }
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
