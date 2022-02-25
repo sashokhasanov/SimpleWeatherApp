@@ -45,7 +45,10 @@ class WeatherTableViewController: UITableViewController {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
-            locationManager.requestLocation()
+            
+            if locationManager.authorizationStatus != .notDetermined {
+                locationManager.requestLocation()
+            }
         } else {
             showAlert(title: "Опаньки 😥",
                       message: "Кажется, на устройстве отключены сервисы геолокации.\nВключите их и перезапустите приложение.")
@@ -71,6 +74,7 @@ class WeatherTableViewController: UITableViewController {
     @objc private func updateWeather() {
         guard let location = lastLocation else {
             refreshControl?.endRefreshing()
+            locationManager.requestLocation()
             return
         }
         
