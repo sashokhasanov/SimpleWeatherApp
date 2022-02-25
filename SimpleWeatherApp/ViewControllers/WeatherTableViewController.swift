@@ -46,6 +46,9 @@ class WeatherTableViewController: UITableViewController {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
             locationManager.requestLocation()
+        } else {
+            showAlert(title: "Опаньки 😥",
+                      message: "Кажется, на устройстве отключены сервисы геолокации.\nВключите их и перезапустите приложение.")
         }
     }
     
@@ -66,7 +69,10 @@ class WeatherTableViewController: UITableViewController {
     }
 
     @objc private func updateWeather() {
-        guard let location = lastLocation else { return }
+        guard let location = lastLocation else {
+            refreshControl?.endRefreshing()
+            return
+        }
         
         WeatherService.shared.getWeatherData(latitude: location.coordinate.latitude,
                                              longtitude: location.coordinate.longitude) { result in
@@ -84,6 +90,13 @@ class WeatherTableViewController: UITableViewController {
                 }
             }
         }
+    }
+    
+    private func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Ок", style: .default)
+        alertController.addAction(alertAction)
+        present(alertController, animated: true)
     }
 }
 
@@ -215,6 +228,17 @@ extension WeatherTableViewController: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Failed to find user's location: \(error.localizedDescription)")
+        if let error = error as? CLError {
+            switch error.code {
+            case CLError.Code.denied:
+                showAlert(title: "Опаньки 😥",
+                          message: "Пожалуйста, разрешите приложению доступ к геопозиции.")
+            default:
+                print("Location manager error: \(error.localizedDescription)")
+            }
+            
+        } else {
+            print(error.localizedDescription)
+        }
     }
 }
