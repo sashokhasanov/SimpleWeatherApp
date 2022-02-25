@@ -234,6 +234,9 @@ extension WeatherTableViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         if let error = error as? CLError {
             switch error.code {
+            case CLError.Code.locationUnknown:
+                showAlert(title: "Опаньки 😥",
+                          message: "Не удалось определить геопозицию. Попробуйте еще раз.")
             case CLError.Code.denied:
                 showAlert(title: "Опаньки 😥",
                           message: "Пожалуйста, разрешите приложению доступ к геопозиции.")
