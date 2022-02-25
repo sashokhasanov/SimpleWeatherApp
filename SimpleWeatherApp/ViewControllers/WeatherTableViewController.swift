@@ -73,7 +73,6 @@ class WeatherTableViewController: UITableViewController {
 
     @objc private func updateWeather() {
         guard let location = lastLocation else {
-            refreshControl?.endRefreshing()
             locationManager.requestLocation()
             return
         }
@@ -232,6 +231,11 @@ extension WeatherTableViewController: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        
+        DispatchQueue.main.async {
+            self.refreshControl?.endRefreshing()
+        }
+        
         if let error = error as? CLError {
             switch error.code {
             case CLError.Code.locationUnknown:
