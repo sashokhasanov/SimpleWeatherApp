@@ -40,11 +40,11 @@ class WeatherTableViewController: UITableViewController {
     }
     
     private func setupLocation() {
-        locationManager.requestWhenInUseAuthorization()
-
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+            
+            locationManager.requestWhenInUseAuthorization()
             
             if locationManager.authorizationStatus != .notDetermined {
                 locationManager.requestLocation()
