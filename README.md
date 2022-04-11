@@ -8,3 +8,7 @@
 |--------------|-------------|
 |![Light](https://user-images.githubusercontent.com/3172532/155732998-d8d27dd7-5e82-469f-b2dd-63e067093ed1.png)|![Dark](https://user-images.githubusercontent.com/3172532/155733013-469bae12-94e4-486d-848d-1f841269a658.png)|
 
+## Сборка проекта
+Для корректной работы приложения необходимо получить api key на https://openweathermap.org/api/one-call-api
+
+Полученный ключ необходимо вписать в поле с ключом API_KEY в файл OpenWeatherMap-Info.plist, который будет создан при первой сборке проекта.
